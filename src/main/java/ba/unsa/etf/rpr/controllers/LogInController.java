@@ -21,7 +21,7 @@ public class LogInController {
     public void onBtnKreirajNoviClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/registracija.fxml"));
         Stage stage = new Stage();
-        stage.setTitle("Radi");
+        stage.setTitle("Registration form");
         stage.setScene(new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE));
         stage.setResizable(false);
         stage.show();
