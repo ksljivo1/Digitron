@@ -19,6 +19,8 @@ public class RegistracijaController {
     public Label userNameLabel;
     public Label passwordLabel;
     private KorisnikDaoSQLImpl korisnikDaoSQLImpl;
+    private boolean neispravanUnos = true;
+    private boolean duplikatUBazi = false;
 
     @FXML
     public void initialize() {
@@ -27,11 +29,13 @@ public class RegistracijaController {
                 textFld.getStyleClass().removeAll("poljeJeIspravno");
                 textFld.getStyleClass().add("poljeNijeIspravno");
                 userNameLabel.setText("At least 8 characters");
+                neispravanUnos = true;
             }
             else {
                 textFld.getStyleClass().removeAll("poljeNijeIspravno");
                 textFld.getStyleClass().add("poljeJeIspravno");
                 userNameLabel.setText("");
+                neispravanUnos = false;
             }
         });
         passwordFld.textProperty().addListener((observableValue, o, n) -> {
@@ -39,11 +43,13 @@ public class RegistracijaController {
                     passwordFld.getStyleClass().removeAll("poljeJeIspravno");
                     passwordFld.getStyleClass().add("poljeNijeIspravno");
                     passwordLabel.setText("At least 8 characters");
+                    neispravanUnos = true;
                 }
                 else {
                     passwordFld.getStyleClass().removeAll("poljeNijeIspravno");
                     passwordFld.getStyleClass().add("poljeJeIspravno");
                     passwordLabel.setText("");
+                    neispravanUnos = false;
                 }
             }
         );
@@ -51,17 +57,32 @@ public class RegistracijaController {
 
     public void onBtnClicked(ActionEvent actionEvent) throws DigitronException {
         korisnikDaoSQLImpl = new KorisnikDaoSQLImpl();
-        Korisnik korisnik = new Korisnik();
-        korisnik.setMode(true);
-        korisnik.setUsername(textFld.getText());
-        korisnik.setPassword(passwordFld.getText());
-        korisnik = korisnikDaoSQLImpl.add(korisnik);
+        duplikatUBazi = korisnikDaoSQLImpl.getKorisnikByUsername(textFld.getText()) != null;
+        if(neispravanUnos || duplikatUBazi) {
+            String poruka;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Registration failed:");
+            if(neispravanUnos && duplikatUBazi)
+                poruka = "Username or password is not long enough and" +
+                        " account with entered username already exists!";
+            else if(!neispravanUnos) poruka = "Account with entered username already exists!";
+            else poruka = "Username or password is not long enough!";
+            alert.setContentText(poruka);
+            alert.showAndWait();
+        }
+        else {
+            Korisnik korisnik = new Korisnik();
+            korisnik.setMode(true);
+            korisnik.setUsername(textFld.getText());
+            korisnik.setPassword(passwordFld.getText());
+            korisnik = korisnikDaoSQLImpl.add(korisnik);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Registration Status:");
-        alert.setContentText("Uspješno ste se registrovali!");
-        alert.showAndWait();
-        Stage stage = (Stage)textFld.getScene().getWindow();
-        stage.close();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Registration Status:");
+            alert.setContentText("Congratulations, your account has been successfully created!");
+            alert.showAndWait();
+            Stage stage = (Stage) textFld.getScene().getWindow();
+            stage.close();
+        }
     }
 }

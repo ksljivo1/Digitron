@@ -23,8 +23,6 @@ f
 6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
 a
 1src/main/java/ba/unsa/etf/rpr/dao/DaoFactory.java,1\d\1d4d726c175f76400bdd70ae701a9db1546e2c4d
-i
-9src/main/java/ba/unsa/etf/rpr/dao/KorisnikDaoSQLImpl.java,2\0\20a483d269bd13b24bab2ec084e8c3ac5c0eab2f
 b
 2src/main/java/ba/unsa/etf/rpr/dao/KorisnikDao.java,3\5\356ac86bf4b925e9a8a1eea99142e75be66557ce
 r
