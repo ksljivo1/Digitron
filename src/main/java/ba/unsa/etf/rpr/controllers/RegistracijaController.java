@@ -29,13 +29,11 @@ public class RegistracijaController {
                 textFld.getStyleClass().removeAll("poljeJeIspravno");
                 textFld.getStyleClass().add("poljeNijeIspravno");
                 userNameLabel.setText("At least 8 characters");
-                neispravanUnos = true;
             }
             else {
                 textFld.getStyleClass().removeAll("poljeNijeIspravno");
                 textFld.getStyleClass().add("poljeJeIspravno");
                 userNameLabel.setText("");
-                neispravanUnos = false;
             }
         });
         passwordFld.textProperty().addListener((observableValue, o, n) -> {
@@ -43,13 +41,11 @@ public class RegistracijaController {
                     passwordFld.getStyleClass().removeAll("poljeJeIspravno");
                     passwordFld.getStyleClass().add("poljeNijeIspravno");
                     passwordLabel.setText("At least 8 characters");
-                    neispravanUnos = true;
                 }
                 else {
                     passwordFld.getStyleClass().removeAll("poljeNijeIspravno");
                     passwordFld.getStyleClass().add("poljeJeIspravno");
                     passwordLabel.setText("");
-                    neispravanUnos = false;
                 }
             }
         );
@@ -58,10 +54,11 @@ public class RegistracijaController {
     public void onBtnClicked(ActionEvent actionEvent) throws DigitronException {
         korisnikDaoSQLImpl = new KorisnikDaoSQLImpl();
         duplikatUBazi = korisnikDaoSQLImpl.getKorisnikByUsername(textFld.getText()) != null;
+        neispravanUnos = textFld.getText().strip().length() < 8 || passwordFld.getText().strip().length() < 8;
         if(neispravanUnos || duplikatUBazi) {
             String poruka;
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Registration failed:");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Registration failed");
             if(neispravanUnos && duplikatUBazi)
                 poruka = "Username or password is not long enough and" +
                         " account with entered username already exists!";
@@ -78,7 +75,7 @@ public class RegistracijaController {
             korisnik = korisnikDaoSQLImpl.add(korisnik);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Registration Status:");
+            alert.setTitle("Registration Status");
             alert.setContentText("Congratulations, your account has been successfully created!");
             alert.showAndWait();
             Stage stage = (Stage) textFld.getScene().getWindow();

@@ -1,8 +1,6 @@
 
 `
 0src/main/java/ba/unsa/etf/rpr/domain/Idable.java,1\0\1089e0b50000999ff509ccb1c536ba9caa5d3183
-b
-2src/main/java/ba/unsa/etf/rpr/domain/Korisnik.java,3\0\3009c6e12fcf4165d9e4bbc277727fb35bbc8b93
 k
 ;src/main/java/ba/unsa/etf/rpr/domain/OmiljenaOperacija.java,9\b\9b01286b77b3242a9b0e5acfb814c524b872bd6c
 _

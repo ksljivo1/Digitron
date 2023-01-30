@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -30,11 +31,18 @@ public class LogInController {
     public void onPrijaviSeBtnClicked(ActionEvent actionEvent) throws DigitronException, IOException {
         KorisnikDaoSQLImpl korisnikDaoSQLImpl = new KorisnikDaoSQLImpl();
         Korisnik korisnik = korisnikDaoSQLImpl.getKorisnikByUsername(textFld.getText());
-        if(!korisnik.getPassword().equals(passwordFld.getText())) return; // ovdje treba dodati
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/digitron.fxml"));
-        Stage stage = new Stage();
-        stage.setTitle("Digitron");
-        stage.setScene(new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE));
-        stage.show();
+        if(korisnik == null || !korisnik.getPassword().equals(passwordFld.getText())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login failed");
+            alert.setContentText("Username or password is wrong!");
+            alert.showAndWait();
+        }
+        else {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/digitron.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Digitron");
+            stage.setScene(new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE));
+            stage.show();
+        }
     }
 }
