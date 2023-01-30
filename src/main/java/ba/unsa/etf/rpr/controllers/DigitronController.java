@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class DigitronController {
     public Label display;
@@ -18,6 +17,7 @@ public class DigitronController {
     // podrzane su osnovne aritmeticke operacije (+, -, *, /)
     // podrzan je prioritet izvrsavanja operacija
     // nije podrzano koristenje zagrada
+    // nije podrzan unarni minus
 
     private static String evaluate(String izraz) {
         try {

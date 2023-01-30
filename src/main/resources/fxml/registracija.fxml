@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" prefHeight="90.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.RegistracijaController">
+<GridPane alignment="CENTER" prefHeight="105.0" prefWidth="444.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.RegistracijaController">
+   <stylesheets>
+       <URL value="@/css/registration.css" />
+   </stylesheets>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -25,17 +37,17 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </Label>
-        <TextField fx:id="textFld" prefWidth="238.0" GridPane.columnIndex="1">
+        <TextField fx:id="textFld" prefWidth="129.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </TextField>
-        <PasswordField fx:id="passwordFld" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <PasswordField fx:id="passwordFld" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </PasswordField>
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
             <buttons>
                 <Button mnemonicParsing="false" onAction="#onBtnClicked" prefHeight="25.0" prefWidth="88.0" text="Register" />
             </buttons>
@@ -43,5 +55,7 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </ButtonBar>
+      <Label fx:id="userNameLabel" GridPane.columnIndex="3" />
+      <Label fx:id="passwordLabel" GridPane.columnIndex="3" GridPane.rowIndex="1" />
     </children>
 </GridPane>
