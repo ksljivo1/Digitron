@@ -2,8 +2,12 @@ package ba.unsa.etf.rpr.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +16,15 @@ import java.util.List;
 public class DigitronController {
     public Label display;
     public double rez = 0;
+    public ComboBox historyBox;
+
+    @FXML
+    public void initialize() {
+        Label sadrzajPrazneHistorije = new Label("Calculation history is empty");
+        sadrzajPrazneHistorije.setTextFill(Color.BLACK);
+        historyBox.setPlaceholder(sadrzajPrazneHistorije);
+    }
+
 
     // prva verzija funkcije koja parsira izraz, zatim ga racuna / baca izuzetak ukoliko izraz nije valjan ili se javlja dijeljenje nulom
     // podrzane su osnovne aritmeticke operacije (+, -, *, /)
@@ -62,6 +75,7 @@ public class DigitronController {
             }
             if(Double.valueOf(rezultat).isInfinite() || Double.valueOf(rezultat).isNaN()) return "ERROR: Division by zero";
             else return String.valueOf(rezultat);
+
         }
         catch (NumberFormatException e) {
             return "ERROR: Invalid syntax";
@@ -174,8 +188,9 @@ public class DigitronController {
     }
 
     public void equalsBtnClicked(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        display.setText(tekst + " = " + evaluate(tekst));
+        String rez = display.getText() + " = " + evaluate(display.getText());
+        historyBox.getItems().add(rez);
+        display.setText(rez);
     }
 
     public void cBtnClicked(ActionEvent actionEvent) {
