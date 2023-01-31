@@ -26,8 +26,6 @@ public class DigitronController {
 
     @FXML
     public void initialize() {
-
-
         Label praznaHistorija = new Label("Calculation history is empty");
         praznaHistorija.setTextFill(Color.SLATEBLUE);
         historyView.setPlaceholder(praznaHistorija);
@@ -200,15 +198,17 @@ public class DigitronController {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             Button button = new Button();
-            HBox stackPane = new HBox();
+            HBox hBox = new HBox();
+            HBox.setHgrow(hBox, Priority.ALWAYS);
             ImageView image = new ImageView("slike/kanta.png");
             image.setFitHeight(15);
             image.setFitWidth(15);
             image.setPreserveRatio(true);
             button.setGraphic(image);
-            stackPane.getChildren().add(new Label(String.format("%-50s%s", rez, "(" + dtf.format(now) + ") ")));
-            stackPane.getChildren().add(button);
-            historyView.getItems().addAll(stackPane);
+            hBox.getChildren().add(new Label(String.format("%-50s%s", rez, "(" + dtf.format(now) + ") ")));
+            hBox.getChildren().add(button);
+            button.setOnAction(event -> historyView.getItems().remove(hBox));
+            historyView.getItems().addAll(hBox);
         }
         display.setText(rez);
     }
