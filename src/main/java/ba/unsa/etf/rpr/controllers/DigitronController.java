@@ -3,15 +3,16 @@ package ba.unsa.etf.rpr.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,43 +22,16 @@ import java.util.List;
 public class DigitronController {
     public Label display;
     public double rez = 0;
-    public ComboBox historyBox;
+    public ListView historyView;
 
     @FXML
     public void initialize() {
-        Label sadrzajPrazneHistorije = new Label("Calculation history is empty");
-        sadrzajPrazneHistorije.setTextFill(Color.DARKCYAN);
-        historyBox.setPlaceholder(sadrzajPrazneHistorije);
 
-        Image img = new Image("slike/calculator.jpg");
-        ImageView view = new ImageView(img);
-        view.setFitHeight(30);
-        view.setPreserveRatio(true);
 
-        historyBox.setCellFactory(param -> new ListCell<String>() {
-            private final Button button = new Button();
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    HBox hbox = new HBox();
-                    Label label = new Label(item);
-                    ImageView image = new ImageView("slike/kanta.png");
-                    image.setFitHeight(15);
-                    image.setFitWidth(15);
-                    image.setPreserveRatio(true);
-                    button.setGraphic(image);
-                    hbox.getChildren().addAll(label, button);
-                    HBox.setHgrow(button, Priority.ALWAYS);
-                    hbox.setAlignment(Pos.CENTER_RIGHT);
-                    setGraphic(hbox);
-                }
-            }
-        });
+        Label praznaHistorija = new Label("Calculation history is empty");
+        praznaHistorija.setTextFill(Color.SLATEBLUE);
+        historyView.setPlaceholder(praznaHistorija);
     }
-
 
     // prva verzija funkcije koja parsira izraz, zatim ga racuna / baca izuzetak ukoliko izraz nije valjan ili se javlja dijeljenje nulom
     // podrzane su osnovne aritmeticke operacije (+, -, *, /)
@@ -225,8 +199,16 @@ public class DigitronController {
         if(!rez.contains("ERROR")) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
-
-            historyBox.getItems().add(String.format("%-40s%s", rez, "(" + dtf.format(now) + ") "));
+            Button button = new Button();
+            HBox stackPane = new HBox();
+            ImageView image = new ImageView("slike/kanta.png");
+            image.setFitHeight(15);
+            image.setFitWidth(15);
+            image.setPreserveRatio(true);
+            button.setGraphic(image);
+            stackPane.getChildren().add(new Label(String.format("%-50s%s", rez, "(" + dtf.format(now) + ") ")));
+            stackPane.getChildren().add(button);
+            historyView.getItems().addAll(stackPane);
         }
         display.setText(rez);
     }
