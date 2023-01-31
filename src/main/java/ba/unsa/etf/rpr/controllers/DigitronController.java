@@ -2,13 +2,18 @@ package ba.unsa.etf.rpr.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +26,36 @@ public class DigitronController {
     @FXML
     public void initialize() {
         Label sadrzajPrazneHistorije = new Label("Calculation history is empty");
-        sadrzajPrazneHistorije.setTextFill(Color.BLACK);
+        sadrzajPrazneHistorije.setTextFill(Color.DARKCYAN);
         historyBox.setPlaceholder(sadrzajPrazneHistorije);
+
+        Image img = new Image("slike/calculator.jpg");
+        ImageView view = new ImageView(img);
+        view.setFitHeight(30);
+        view.setPreserveRatio(true);
+
+        historyBox.setCellFactory(param -> new ListCell<String>() {
+            private final Button button = new Button();
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    HBox hbox = new HBox();
+                    Label label = new Label(item);
+                    ImageView image = new ImageView("slike/kanta.png");
+                    image.setFitHeight(15);
+                    image.setFitWidth(15);
+                    image.setPreserveRatio(true);
+                    button.setGraphic(image);
+                    hbox.getChildren().addAll(label, button);
+                    HBox.setHgrow(button, Priority.ALWAYS);
+                    hbox.setAlignment(Pos.CENTER_RIGHT);
+                    setGraphic(hbox);
+                }
+            }
+        });
     }
 
 
@@ -189,7 +222,12 @@ public class DigitronController {
 
     public void equalsBtnClicked(ActionEvent actionEvent) {
         String rez = display.getText() + " = " + evaluate(display.getText());
-        historyBox.getItems().add(rez);
+        if(!rez.contains("ERROR")) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+
+            historyBox.getItems().add(String.format("%-40s%s", rez, "(" + dtf.format(now) + ") "));
+        }
         display.setText(rez);
     }
 

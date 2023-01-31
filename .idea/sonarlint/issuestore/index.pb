@@ -29,3 +29,7 @@ Bsrc/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDaoSQLImpl.java,6\2\6268801
 +src/main/java/ba/unsa/etf/rpr/Digitron.java,c\5\c51186e09b23d044f27772d77f8c2f671e456979
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+i
+9src/main/java/ba/unsa/etf/rpr/dao/KorisnikDaoSQLImpl.java,2\0\20a483d269bd13b24bab2ec084e8c3ac5c0eab2f
+u
+Esrc/main/java/ba/unsa/etf/rpr/controllers/RegistracijaController.java,9\0\9078bd05f5a1f0b8f8388d81fef204fbab6271f3
