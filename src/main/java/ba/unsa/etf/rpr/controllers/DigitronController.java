@@ -2,14 +2,14 @@ package ba.unsa.etf.rpr.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -198,17 +198,29 @@ public class DigitronController {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             Button button = new Button();
-            HBox hBox = new HBox();
-            HBox.setHgrow(hBox, Priority.ALWAYS);
+            GridPane gridPane = new GridPane();
+
             ImageView image = new ImageView("slike/kanta.png");
             image.setFitHeight(15);
             image.setFitWidth(15);
             image.setPreserveRatio(true);
             button.setGraphic(image);
-            hBox.getChildren().add(new Label(String.format("%-50s%s", rez, "(" + dtf.format(now) + ") ")));
-            hBox.getChildren().add(button);
-            button.setOnAction(event -> historyView.getItems().remove(hBox));
-            historyView.getItems().addAll(hBox);
+
+            gridPane.add(new Label(rez + " "), 0, 0);
+            Label datum = new Label("(" + dtf.format(now) + ")");
+            datum.setFont(Font.font(10));
+            datum.setTextFill(Color.LIGHTSLATEGRAY);
+            gridPane.add(datum, 0, 1);
+            gridPane.add(button, 1, 0, 1, 2);
+
+            button.setOnAction(event -> historyView.getItems().remove(gridPane));
+            historyView.getItems().addAll(gridPane);
+            ColumnConstraints leftCol = new ColumnConstraints();
+            ColumnConstraints rightCol = new ColumnConstraints();
+            rightCol.setHalignment(HPos.RIGHT);
+            rightCol.setHgrow(Priority.ALWAYS);
+
+            gridPane.getColumnConstraints().addAll(leftCol, rightCol);
         }
         display.setText(rez);
     }
