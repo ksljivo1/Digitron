@@ -38,7 +38,11 @@ public class LogInController {
             alert.showAndWait();
         }
         else {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/digitron.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/digitron.fxml"));
+            Parent root = loader.load();
+            DigitronController digitronController = loader.getController();
+            digitronController.setKorisnik(korisnik);
+
             Stage stage = new Stage();
             stage.setTitle("Digitron");
             stage.setScene(new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE));

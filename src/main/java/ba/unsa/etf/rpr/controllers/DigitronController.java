@@ -1,19 +1,25 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.dao.RacunDaoSQLImpl;
+import ba.unsa.etf.rpr.domain.Korisnik;
+import ba.unsa.etf.rpr.domain.Racun;
+import ba.unsa.etf.rpr.exceptions.DigitronException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +27,16 @@ import java.util.List;
 
 public class DigitronController {
     public Label display;
-    public double rez = 0;
     public ListView historyView;
+    private Korisnik korisnik;
+    private RacunDaoSQLImpl racunDaoSQL;
+
+    public DigitronController() {
+        racunDaoSQL = new RacunDaoSQLImpl();
+    }
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
+    }
 
     @FXML
     public void initialize() {
@@ -192,7 +206,7 @@ public class DigitronController {
         display.setText(tekst + " + ");
     }
 
-    public void equalsBtnClicked(ActionEvent actionEvent) {
+    public void equalsBtnClicked(ActionEvent actionEvent) throws DigitronException {
         String rez = display.getText() + " = " + evaluate(display.getText());
         if(!rez.contains("ERROR")) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -221,6 +235,21 @@ public class DigitronController {
             rightCol.setHgrow(Priority.ALWAYS);
 
             gridPane.getColumnConstraints().addAll(leftCol, rightCol);
+            Racun racun = new Racun();
+            racun.setRezultat(rez);
+            racun.setIdKorisnik(korisnik.getId());
+
+            // konverzija LocalDateTime datuma u sql.Timestamp
+            // koristi se TimeStamp da se ocuva informacija o satima, minutama i sekundama
+            LocalDateTime localDateTime = LocalDateTime.now();
+            ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("UTC"));
+            Instant instant = zonedDateTime.toInstant();
+            java.util.Date date = java.util.Date.from(instant);
+            java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+            racun.setDatum(timestamp);
+
+            //RacunDaoSQLImpl racunDaoSQL = new RacunDaoSQLImpl();
+            racunDaoSQL.add(racun);
         }
         display.setText(rez);
     }
