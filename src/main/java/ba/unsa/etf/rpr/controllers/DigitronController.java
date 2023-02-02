@@ -56,7 +56,14 @@ public class DigitronController {
             gridPane.add(datum, 0, 1);
             gridPane.add(button, 1, 0, 1, 2);
 
-            button.setOnAction(event -> historyView.getItems().remove(gridPane));
+            button.setOnAction(event -> {
+                historyView.getItems().remove(gridPane);
+                try {
+                    racunDaoSQL.delete(r.getId());
+                } catch (DigitronException e) {
+                    e.printStackTrace();
+                }
+            });
             historyView.getItems().addAll(gridPane);
             ColumnConstraints leftCol = new ColumnConstraints();
             ColumnConstraints rightCol = new ColumnConstraints();
@@ -257,7 +264,7 @@ public class DigitronController {
             gridPane.add(datum, 0, 1);
             gridPane.add(button, 1, 0, 1, 2);
 
-            button.setOnAction(event -> historyView.getItems().remove(gridPane));
+
             historyView.getItems().addAll(gridPane);
             ColumnConstraints leftCol = new ColumnConstraints();
             ColumnConstraints rightCol = new ColumnConstraints();
@@ -279,7 +286,16 @@ public class DigitronController {
             racun.setDatum(timestamp);
 
             //RacunDaoSQLImpl racunDaoSQL = new RacunDaoSQLImpl();
-            racunDaoSQL.add(racun);
+            racun = racunDaoSQL.add(racun);
+            Racun finalRacun = racun;
+            button.setOnAction(event -> {
+                historyView.getItems().remove(gridPane);
+                try {
+                    racunDaoSQL.delete(finalRacun.getId());
+                } catch (DigitronException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         display.setText(rez);
     }
