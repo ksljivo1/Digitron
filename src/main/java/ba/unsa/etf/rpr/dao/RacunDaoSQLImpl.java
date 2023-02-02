@@ -3,8 +3,11 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Racun;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -35,5 +38,21 @@ public class RacunDaoSQLImpl extends AbstractDao<Racun> implements RacunDao {
         row.put("datum", object.getDatum());
         row.put("rezultat", object.getRezultat());
         return row;
+    }
+
+    @Override
+    public List<Racun> getRacuniByKorisnikId(int korisnikId) throws DigitronException {
+        List<Racun> racuni = new ArrayList<>();
+        String query = "SELECT * FROM Racun WHERE idKorisnik = ?";
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(query);
+            statement.setInt(1, korisnikId);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) racuni.add(row2object(rs));
+        }
+        catch(SQLException e) {
+            throw new DigitronException(e.getMessage(), e);
+        }
+        return racuni;
     }
 }

@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +35,41 @@ public class DigitronController {
     public DigitronController() {
         racunDaoSQL = new RacunDaoSQLImpl();
     }
-    public void setKorisnik(Korisnik korisnik) {
+    public void setKorisnik(Korisnik korisnik) throws DigitronException {
         this.korisnik = korisnik;
+        List<Racun> racuni = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId());
+        for(Racun r : racuni) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            Button button = new Button();
+            GridPane gridPane = new GridPane();
+
+            ImageView image = new ImageView("slike/kanta.png");
+            image.setFitHeight(15);
+            image.setFitWidth(15);
+            image.setPreserveRatio(true);
+            button.setGraphic(image);
+
+            gridPane.add(new Label(r.getRezultat() + " "), 0, 0);
+            Label datum = new Label("(" + r.getDatum() + ")");
+            datum.setFont(Font.font(10));
+            datum.setTextFill(Color.LIGHTSLATEGRAY);
+            gridPane.add(datum, 0, 1);
+            gridPane.add(button, 1, 0, 1, 2);
+
+            button.setOnAction(event -> historyView.getItems().remove(gridPane));
+            historyView.getItems().addAll(gridPane);
+            ColumnConstraints leftCol = new ColumnConstraints();
+            ColumnConstraints rightCol = new ColumnConstraints();
+            rightCol.setHalignment(HPos.RIGHT);
+            rightCol.setHgrow(Priority.ALWAYS);
+
+            gridPane.getColumnConstraints().addAll(leftCol, rightCol);
+        }
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws DigitronException {
+
         Label praznaHistorija = new Label("Calculation history is empty");
         praznaHistorija.setTextFill(Color.SLATEBLUE);
         historyView.setPlaceholder(praznaHistorija);
@@ -64,8 +94,8 @@ public class DigitronController {
         List<String> listaArgumenata = new ArrayList<>(Arrays.asList(izraz.split(" \\+ | \\* | \\- | \\/ ")));
         // lista koja sadrzi sve osnovne aritmeticke operacije koje se javljaju u izrazu
         List<String> listaOperacija = new ArrayList<>(Arrays.asList(Arrays.stream(izraz.split("[+-]?([0-9]*[.]?[0-9]+|[0-9]+[.]?[0-9]*)"))
-                                                                          .filter(s -> !(s.isBlank()))
-                                                                          .toArray(String[]::new)));
+                .filter(s -> !(s.isBlank()))
+                .toArray(String[]::new)));
 
         // posto su svi podrzani operatori binarni, valjan izraz ce uvijek imati broj operatora za jedan manji od broja argumenata
         if(listaOperacija.size() >= listaArgumenata.size()) return "ERROR: Invalid syntax";
@@ -209,7 +239,7 @@ public class DigitronController {
     public void equalsBtnClicked(ActionEvent actionEvent) throws DigitronException {
         String rez = display.getText() + " = " + evaluate(display.getText());
         if(!rez.contains("ERROR")) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDateTime now = LocalDateTime.now();
             Button button = new Button();
             GridPane gridPane = new GridPane();
