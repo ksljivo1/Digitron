@@ -1,7 +1,9 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
+import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
+import ba.unsa.etf.rpr.domain.OmiljenaOperacija;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -73,6 +75,13 @@ public class RegistracijaController {
             korisnik.setUsername(textFld.getText());
             korisnik.setPassword(passwordFld.getText());
             korisnik = korisnikDaoSQLImpl.add(korisnik);
+
+            OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
+            OmiljenaOperacija omiljenaOperacija = new OmiljenaOperacija();
+            omiljenaOperacija.setIdKorisnik(korisnik.getId());
+            omiljenaOperacija.setOperacija("nothing so far");
+            omiljenaOperacija.setBrojPonavljanja(0);
+            omiljenaOperacija = omiljenaOperacijaDaoSQL.add(omiljenaOperacija);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Registration Status");

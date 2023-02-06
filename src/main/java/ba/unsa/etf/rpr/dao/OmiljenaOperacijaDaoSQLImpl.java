@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.OmiljenaOperacija;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
@@ -36,5 +37,20 @@ public class OmiljenaOperacijaDaoSQLImpl extends AbstractDao<OmiljenaOperacija> 
         row.put("broj_ponavljanja", object.getBrojPonavljanja());
         row.put("idKorisnik", object.getIdKorisnik());
         return row;
+    }
+
+    @Override
+    public OmiljenaOperacija getOmiljenaOperacijaByKorisnikId(int korisnikId) throws DigitronException {
+        String query = "SELECT * FROM OmiljenaOperacija WHERE idKorisnik = ?";
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(query);
+            statement.setInt(1, korisnikId);
+            ResultSet rs = statement.executeQuery();
+            if(!rs.next()) return null;
+            return row2object(rs);
+        }
+        catch(SQLException | DigitronException e) {
+            throw new DigitronException(e.getMessage(), e);
+        }
     }
 }

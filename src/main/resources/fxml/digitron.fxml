@@ -25,6 +25,7 @@
         <RowConstraints vgrow="ALWAYS" />
         <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
     <children>
         <Button fx:id="modBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cBtnClicked" prefHeight="25.0" prefWidth="52.0" text="C" GridPane.rowIndex="1" />
@@ -49,6 +50,7 @@
         <Button fx:id="btn0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn0Click" prefHeight="25.0" prefWidth="116.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
         <Button fx:id="dotBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dotBtnClicked" prefHeight="25.0" prefWidth="52.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <ListView fx:id="historyView" editable="true" prefHeight="182.0" prefWidth="303.0" GridPane.columnIndex="4" GridPane.rowSpan="6" />
+      <Label fx:id="omiljenaOperacijaLabel" text="Omiljena operacija:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
