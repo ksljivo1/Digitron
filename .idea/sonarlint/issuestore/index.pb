@@ -1,12 +1,8 @@
 
 `
 0src/main/java/ba/unsa/etf/rpr/domain/Idable.java,1\0\1089e0b50000999ff509ccb1c536ba9caa5d3183
-o
-?src/main/java/ba/unsa/etf/rpr/exceptions/DigitronException.java,4\a\4adaf822d914ddc0167ac58cd0651bc1ce98391b
 X
 (.idea/libraries/mysql_connector_java.xml,6\3\634ce47ae1452217f945e714cee3a0089e7e11eb
-a
-1src/main/java/ba/unsa/etf/rpr/dao/DaoFactory.java,1\d\1d4d726c175f76400bdd70ae701a9db1546e2c4d
 [
 +src/main/java/ba/unsa/etf/rpr/Digitron.java,c\5\c51186e09b23d044f27772d77f8c2f671e456979
 7
@@ -17,7 +13,19 @@ b
 2src/main/java/ba/unsa/etf/rpr/dao/KorisnikDao.java,3\5\356ac86bf4b925e9a8a1eea99142e75be66557ce
 ^
 .src/main/java/ba/unsa/etf/rpr/DigitronApp.java,d\8\d8e6f8ca64c2086b2a1333b69b30bb7b4906f0e3
-n
->src/main/java/ba/unsa/etf/rpr/controllers/LogInController.java,f\7\f710fa95dfa8169848df7e9845295d014a9fd8ee
 _
 /src/main/java/ba/unsa/etf/rpr/dao/RacunDao.java,f\4\f40af097315dc4ae9f4f0fdd7310efcc21b6810a
+k
+;src/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDao.java,d\2\d23a5d83df80c7b7c8b2a05a63e446e66da05716
+_
+/src/main/java/ba/unsa/etf/rpr/domain/Racun.java,7\8\78a2fd6bbcf37a067d46a4491c0ac46ebe492424
+a
+1src/main/java/ba/unsa/etf/rpr/dao/DaoFactory.java,1\d\1d4d726c175f76400bdd70ae701a9db1546e2c4d
+o
+?src/main/java/ba/unsa/etf/rpr/exceptions/DigitronException.java,4\a\4adaf822d914ddc0167ac58cd0651bc1ce98391b
+b
+2src/main/java/ba/unsa/etf/rpr/dao/AbstractDao.java,5\7\57507653d3cc2897e4c1a2a493815c4dfcd600c7
+f
+6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
+Z
+*src/main/java/ba/unsa/etf/rpr/dao/Dao.java,a\1\a1348960998eebe088bc844c2afaaa6dd9d147f9

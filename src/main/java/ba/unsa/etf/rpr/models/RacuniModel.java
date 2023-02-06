@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr.models;
 
-import ba.unsa.etf.rpr.domain.Racun;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

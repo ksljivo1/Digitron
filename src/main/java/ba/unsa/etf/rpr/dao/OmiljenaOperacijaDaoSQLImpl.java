@@ -41,7 +41,7 @@ public class OmiljenaOperacijaDaoSQLImpl extends AbstractDao<OmiljenaOperacija> 
 
     @Override
     public OmiljenaOperacija getOmiljenaOperacijaByKorisnikId(int korisnikId) throws DigitronException {
-        String query = "SELECT * FROM OmiljenaOperacija WHERE idKorisnik = ?";
+        String query = "SELECT * FROM Omiljena_Operacija WHERE idKorisnik = ?";
         try {
             PreparedStatement statement = getConnection().prepareStatement(query);
             statement.setInt(1, korisnikId);

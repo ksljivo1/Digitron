@@ -79,7 +79,7 @@ public class RegistracijaController {
             OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
             OmiljenaOperacija omiljenaOperacija = new OmiljenaOperacija();
             omiljenaOperacija.setIdKorisnik(korisnik.getId());
-            omiljenaOperacija.setOperacija("nothing so far");
+            omiljenaOperacija.setOperacija("");
             omiljenaOperacija.setBrojPonavljanja(0);
             omiljenaOperacija = omiljenaOperacijaDaoSQL.add(omiljenaOperacija);
 

@@ -3,11 +3,18 @@ package ba.unsa.etf.rpr.controllers;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.RacunDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
+import ba.unsa.etf.rpr.domain.OmiljenaOperacija;
 import ba.unsa.etf.rpr.domain.Racun;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
+import ba.unsa.etf.rpr.models.OmiljenaOperacijaModel;
 import ba.unsa.etf.rpr.models.RacunModel;
 import ba.unsa.etf.rpr.models.RacuniModel;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,20 +38,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class DigitronController {
     public Label display;
     public ListView historyView;
     public Label omiljenaOperacijaLabel;
+    public Label brojPonavljanjaLabel;
     private Korisnik korisnik;
     private RacunDaoSQLImpl racunDaoSQL;
     private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
     private RacuniModel racuniModel = new RacuniModel();
+    private OmiljenaOperacijaModel omiljenaOperacijaModel;
 
     public class XCell extends ListCell<RacunModel> {
         GridPane gridPane = new GridPane();
         Label rezultat = new Label("");
-        Label datum= new Label("");
+        Label datum = new Label("");
         Button button = new Button();
 
         public XCell() {
@@ -82,8 +92,7 @@ public class DigitronController {
             super.updateItem(item, empty);
             setText(null);
             setGraphic(null);
-
-            if (item != null && !empty) {
+            if(item != null && !empty) {
                 rezultat.setText(item.getRezultat());
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 datum.setText(dtf.format(Instant.ofEpochMilli(item.getDatum().getTime())
@@ -96,54 +105,55 @@ public class DigitronController {
 
     public DigitronController() {
         racunDaoSQL = new RacunDaoSQLImpl();
-        //omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
+        omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
     }
     public void setKorisnik(Korisnik korisnik) throws DigitronException {
         this.korisnik = korisnik;
-
-
-
-        /*List<Racun> racuni = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId());
-        for(Racun r : racuni) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            Button button = new Button();
-            GridPane gridPane = new GridPane();
-
-            ImageView image = new ImageView("slike/kanta.png");
-            image.setFitHeight(15);
-            image.setFitWidth(15);
-            image.setPreserveRatio(true);
-            button.setGraphic(image);
-
-            gridPane.add(new Label(r.getRezultat() + " "), 0, 0);
-            Label datum = new Label("(" + r.getDatum() + ")");
-            datum.setFont(Font.font(10));
-            datum.setTextFill(Color.LIGHTSLATEGRAY);
-            gridPane.add(datum, 0, 1);
-            gridPane.add(button, 1, 0, 1, 2);
-
-            button.setOnAction(event -> {
-                historyView.getItems().remove(gridPane);
-                try {
-                    racunDaoSQL.delete(r.getId());
-                }
-                catch (DigitronException e) {
-                    e.printStackTrace();
-                }
-            });
-            historyView.getItems().addAll(gridPane);
-            ColumnConstraints leftCol = new ColumnConstraints();
-            ColumnConstraints rightCol = new ColumnConstraints();
-            rightCol.setHalignment(HPos.RIGHT);
-            rightCol.setHgrow(Priority.ALWAYS);
-
-            gridPane.getColumnConstraints().addAll(leftCol, rightCol);
-        }*/
         historyView.setCellFactory(param -> new XCell());
-        ObservableList<RacunModel> tt = FXCollections.observableArrayList(racunDaoSQL.getRacuniByKorisnikId(korisnik.getId())
+        ObservableList<RacunModel> racuni = FXCollections.observableArrayList(racunDaoSQL.getRacuniByKorisnikId(korisnik.getId())
                 .stream().map(RacunModel::new).collect(Collectors.toList()));
-        racuniModel.setRacuni(tt);
+        racuniModel.setRacuni(racuni);
         historyView.setItems(racuniModel.getRacuni());
+        historyView.getItems().addListener((ListChangeListener<? super RacunModel>) observable -> {
+            try {
+                /*IntStream racuns = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
+                        get().chars().map(x -> (char) x);*/
+                long brPluseva = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
+                        get().chars().map(x -> (char) x).filter(c -> c == '+').count();
+                long brMinusa = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
+                        get().chars().map(x -> (char) x).filter(c -> c == '-').count();
+                long brDijeljenja = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
+                        get().chars().map(x -> (char) x).filter(c -> c == '/').count();
+                long brMnozenja = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
+                        get().chars().map(x -> (char) x).filter(c -> c == '*').count();
+                String operacija = "+";
+                long max = brPluseva;
+                if(brMinusa > max) {
+                    max = brMinusa;
+                    operacija = "-";
+                }
+                if(brDijeljenja > max) {
+                    max = brDijeljenja;
+                    operacija = "/";
+                }
+                if(brMnozenja > max) {
+                    max = brMnozenja;
+                    operacija = "*";
+                }
+                OmiljenaOperacija update = omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId());
+                update.setBrojPonavljanja((int) max);
+                update.setOperacija(operacija);
+                omiljenaOperacijaDaoSQL.update(update);
+                //ovo prije
+                omiljenaOperacijaModel.setOperacija(operacija);
+                omiljenaOperacijaModel.setBrojPonavljanja((int) max);
+            } catch (DigitronException e) {
+                e.printStackTrace();
+            }
+        });
+        omiljenaOperacijaModel = new OmiljenaOperacijaModel(omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId()));
+        omiljenaOperacijaLabel.textProperty().bind(omiljenaOperacijaModel.operacijaProperty());
+        brojPonavljanjaLabel.textProperty().bind(omiljenaOperacijaModel.brojPonavljanjaProperty().asString());
     }
 
     @FXML
@@ -327,56 +337,6 @@ public class DigitronController {
             racun.setDatum(timestamp);
             racun = racunDaoSQL.add(racun);
             historyView.getItems().add(new RacunModel(racun));
-            /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDateTime now = LocalDateTime.now();
-            Button button = new Button();
-            GridPane gridPane = new GridPane();
-
-            ImageView image = new ImageView("slike/kanta.png");
-            image.setFitHeight(15);
-            image.setFitWidth(15);
-            image.setPreserveRatio(true);
-            button.setGraphic(image);
-
-            gridPane.add(new Label(rez + " "), 0, 0);
-            Label datum = new Label("(" + dtf.format(now) + ")");
-            datum.setFont(Font.font(10));
-            datum.setTextFill(Color.LIGHTSLATEGRAY);
-            gridPane.add(datum, 0, 1);
-            gridPane.add(button, 1, 0, 1, 2);
-
-            historyView.getItems().addAll(gridPane);
-            ColumnConstraints leftCol = new ColumnConstraints();
-            ColumnConstraints rightCol = new ColumnConstraints();
-            rightCol.setHalignment(HPos.RIGHT);
-            rightCol.setHgrow(Priority.ALWAYS);
-
-            gridPane.getColumnConstraints().addAll(leftCol, rightCol);
-            Racun racun = new Racun();
-            racun.setRezultat(rez);
-            racun.setIdKorisnik(korisnik.getId());
-
-            // konverzija LocalDateTime datuma u sql.Timestamp
-            // koristi se TimeStamp da se ocuva informacija o satima, minutama i sekundama
-            LocalDateTime localDateTime = LocalDateTime.now();
-            ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("UTC"));
-            Instant instant = zonedDateTime.toInstant();
-            java.util.Date date = java.util.Date.from(instant);
-            java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
-            racun.setDatum(timestamp);
-
-            //RacunDaoSQLImpl racunDaoSQL = new RacunDaoSQLImpl();
-            racun = racunDaoSQL.add(racun);
-            Racun finalRacun = racun;
-            button.setOnAction(event -> {
-                historyView.getItems().remove(gridPane);
-                try {
-                    racunDaoSQL.delete(finalRacun.getId());
-                }
-                catch (DigitronException e) {
-                    e.printStackTrace();
-                }
-            });*/
         }
         display.setText(rez);
     }

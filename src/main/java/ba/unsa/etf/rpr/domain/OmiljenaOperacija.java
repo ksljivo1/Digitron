@@ -1,5 +1,8 @@
 package ba.unsa.etf.rpr.domain;
 
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ObservableValueBase;
+
 import java.util.Objects;
 
 public class OmiljenaOperacija implements Idable {
@@ -8,8 +11,7 @@ public class OmiljenaOperacija implements Idable {
     private int brojPonavljanja;
     private int idKorisnik;
 
-    public OmiljenaOperacija() {
-    }
+    public OmiljenaOperacija() {}
 
     @Override
     public int getId() {
