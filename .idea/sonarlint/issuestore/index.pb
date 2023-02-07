@@ -29,3 +29,7 @@ f
 6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
 Z
 *src/main/java/ba/unsa/etf/rpr/dao/Dao.java,a\1\a1348960998eebe088bc844c2afaaa6dd9d147f9
+e
+5src/main/java/ba/unsa/etf/rpr/models/RacuniModel.java,8\a\8ad14d2e46ae806c9e41750cdc0100d220438574
+u
+Esrc/main/java/ba/unsa/etf/rpr/controllers/RegistracijaController.java,9\0\9078bd05f5a1f0b8f8388d81fef204fbab6271f3

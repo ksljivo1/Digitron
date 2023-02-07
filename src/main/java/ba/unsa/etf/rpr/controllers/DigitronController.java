@@ -9,10 +9,6 @@ import ba.unsa.etf.rpr.exceptions.DigitronException;
 import ba.unsa.etf.rpr.models.OmiljenaOperacijaModel;
 import ba.unsa.etf.rpr.models.RacunModel;
 import ba.unsa.etf.rpr.models.RacuniModel;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -29,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -37,6 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -116,37 +114,40 @@ public class DigitronController {
         historyView.setItems(racuniModel.getRacuni());
         historyView.getItems().addListener((ListChangeListener<? super RacunModel>) observable -> {
             try {
-                /*IntStream racuns = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
-                        get().chars().map(x -> (char) x);*/
-                long brPluseva = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
-                        get().chars().map(x -> (char) x).filter(c -> c == '+').count();
-                long brMinusa = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
-                        get().chars().map(x -> (char) x).filter(c -> c == '-').count();
-                long brDijeljenja = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
-                        get().chars().map(x -> (char) x).filter(c -> c == '/').count();
-                long brMnozenja = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).reduce(String::concat).
-                        get().chars().map(x -> (char) x).filter(c -> c == '*').count();
-                String operacija = "+";
-                long max = brPluseva;
+                List<String> results = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).collect(Collectors.toList());
+                Optional<String> combined = results.stream().reduce(String::concat);
+
+                long brPluseva = combined.map(s -> s.chars().filter(c -> c == '+')).orElseGet(IntStream::empty).count();
+                long brMinusa = combined.map(s -> s.chars().filter(c -> c == '-')).orElseGet(IntStream::empty).count();
+                long brDijeljenja = combined.map(s -> s.chars().filter(c -> c == '/')).orElseGet(IntStream::empty).count();
+                long brMnozenja = combined.map(s -> s.chars().filter(c -> c == '*')).orElseGet(IntStream::empty).count();
+
+                String operacija = "";
+                long max = 0;
+                if(brPluseva > max) {
+                    max = brPluseva;
+                    operacija = "+";
+                }
                 if(brMinusa > max) {
                     max = brMinusa;
                     operacija = "-";
-                }
-                if(brDijeljenja > max) {
-                    max = brDijeljenja;
-                    operacija = "/";
                 }
                 if(brMnozenja > max) {
                     max = brMnozenja;
                     operacija = "*";
                 }
+                if(brDijeljenja > max) {
+                    max = brDijeljenja;
+                    operacija = "/";
+                }
+
+                omiljenaOperacijaModel.setOperacija(operacija);
+                omiljenaOperacijaModel.setBrojPonavljanja((int) max);
+
                 OmiljenaOperacija update = omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId());
                 update.setBrojPonavljanja((int) max);
                 update.setOperacija(operacija);
                 omiljenaOperacijaDaoSQL.update(update);
-                //ovo prije
-                omiljenaOperacijaModel.setOperacija(operacija);
-                omiljenaOperacijaModel.setBrojPonavljanja((int) max);
             } catch (DigitronException e) {
                 e.printStackTrace();
             }
