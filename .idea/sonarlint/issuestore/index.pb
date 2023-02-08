@@ -3,16 +3,10 @@
 0src/main/java/ba/unsa/etf/rpr/domain/Idable.java,1\0\1089e0b50000999ff509ccb1c536ba9caa5d3183
 X
 (.idea/libraries/mysql_connector_java.xml,6\3\634ce47ae1452217f945e714cee3a0089e7e11eb
-[
-+src/main/java/ba/unsa/etf/rpr/Digitron.java,c\5\c51186e09b23d044f27772d77f8c2f671e456979
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 b
 2src/main/java/ba/unsa/etf/rpr/domain/Korisnik.java,3\0\3009c6e12fcf4165d9e4bbc277727fb35bbc8b93
 b
 2src/main/java/ba/unsa/etf/rpr/dao/KorisnikDao.java,3\5\356ac86bf4b925e9a8a1eea99142e75be66557ce
-^
-.src/main/java/ba/unsa/etf/rpr/DigitronApp.java,d\8\d8e6f8ca64c2086b2a1333b69b30bb7b4906f0e3
 _
 /src/main/java/ba/unsa/etf/rpr/dao/RacunDao.java,f\4\f40af097315dc4ae9f4f0fdd7310efcc21b6810a
 k

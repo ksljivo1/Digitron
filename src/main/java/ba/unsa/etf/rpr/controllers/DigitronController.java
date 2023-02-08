@@ -81,8 +81,7 @@ public class DigitronController {
                     e.printStackTrace();
                 }
                 getListView().getItems().remove(getItem());
-            }
-            );
+            });
         }
 
         @Override
