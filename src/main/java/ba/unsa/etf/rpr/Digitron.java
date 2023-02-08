@@ -1,7 +1,5 @@
 package ba.unsa.etf.rpr;
 
-import ba.unsa.etf.rpr.models.DigitronParser;
-
 public class Digitron {
     public static void main(String[] args) throws Exception {
         DigitronLexer digitronLexer = new DigitronLexer();

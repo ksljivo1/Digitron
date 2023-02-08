@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.models;
+package ba.unsa.etf.rpr;
 
 import ba.unsa.etf.rpr.Tokens;
 import javafx.util.Pair;
