@@ -3,9 +3,7 @@ package ba.unsa.etf.rpr;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DigitronLexer {
     List<Pair<Tokens, String>> tokens;
