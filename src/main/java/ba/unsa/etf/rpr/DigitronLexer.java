@@ -20,11 +20,12 @@ public class DigitronLexer {
             else if(current == '-') tokens.add(new Pair(Tokens.MINUS, "-"));
             else if(current == '*') tokens.add(new Pair(Tokens.MULTIPLY, "*"));
             else if(current == '/') tokens.add(new Pair(Tokens.DIVIDE, "/"));
+            else if(current == '(') tokens.add(new Pair(Tokens.LPARENTHESIS, "("));
+            else if(current == ')') tokens.add(new Pair(Tokens.RPARENTHESIS, ")"));
             else if(Character.isDigit(current)) {
                 StringBuilder broj = new StringBuilder();
                 int poz1 = poz;
-                while(poz1 < expr.length() &&
-                        (Character.isDigit(expr.charAt(poz1)) || expr.charAt(poz1) == '.'))  {
+                while(poz1 < expr.length() && (Character.isDigit(expr.charAt(poz1)) || expr.charAt(poz1) == '.'))  {
                     broj.append(expr.charAt(poz1));
                     poz1 = poz1 + 1;
                 }
@@ -40,7 +41,6 @@ public class DigitronLexer {
             }
             else if(current == ' ') ;
             else throw new Exception("Expected a valid token at position: " + poz + " instead recieved: " + current);
-
             poz = poz + 1;
         }
         tokens.add(new Pair(Tokens.EOF, "EOF"));

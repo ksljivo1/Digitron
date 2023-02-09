@@ -6,5 +6,7 @@ public enum Tokens {
     MULTIPLY,
     DIVIDE,
     DOUBLE,
-    EOF
+    EOF,
+    LPARENTHESIS,
+    RPARENTHESIS
 }

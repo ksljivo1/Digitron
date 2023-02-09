@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr;
 
-import ba.unsa.etf.rpr.Tokens;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -27,7 +27,7 @@ public class DigitronParser {
         return numberTokens;
     }
 
-    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) {
+    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) throws Exception {
         int i = 0;
         Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {
@@ -77,7 +77,15 @@ public class DigitronParser {
     }
 
     private static boolean isOperationToken(Pair<Tokens, String> token) {
-        return !isNumberToken(token) && !isEOFToken(token);
+        return token.getKey() == Tokens.PLUS || token.getKey() == Tokens.MINUS || token.getKey() == Tokens.MULTIPLY || token.getKey() == Tokens.DIVIDE;
+    }
+
+    private static boolean isLPARENTHESISToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.LPARENTHESIS;
+    }
+
+    private static boolean isRPARENTHESISToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.RPARENTHESIS;
     }
 
     private static boolean hasHigherPrecedence(Pair<Tokens, String> token) {
@@ -90,7 +98,7 @@ public class DigitronParser {
         else if(op.equals("*")) return a * b;
         else {
             Double rez = a / b;
-            if(rez.isNaN() || rez.isInfinite()) throw new RuntimeException("ERROR: Division by zero");
+            if(rez.isNaN() || rez.isInfinite()) throw new ArithmeticException("ERROR: Division by zero");
             return rez;
         }
     }
