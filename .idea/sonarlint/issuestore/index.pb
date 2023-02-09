@@ -27,3 +27,17 @@ e
 5src/main/java/ba/unsa/etf/rpr/models/RacuniModel.java,8\a\8ad14d2e46ae806c9e41750cdc0100d220438574
 u
 Esrc/main/java/ba/unsa/etf/rpr/controllers/RegistracijaController.java,9\0\9078bd05f5a1f0b8f8388d81fef204fbab6271f3
+d
+4src/main/java/ba/unsa/etf/rpr/models/RacunModel.java,9\1\9117bfdb2f6637d5d5b1da164e24b3503926d776
+p
+@src/main/java/ba/unsa/etf/rpr/models/OmiljenaOperacijaModel.java,4\a\4a258218b9e2d676aaf50ba1897175d04f23f04d
+i
+9src/main/java/ba/unsa/etf/rpr/dao/KorisnikDaoSQLImpl.java,2\0\20a483d269bd13b24bab2ec084e8c3ac5c0eab2f
+n
+>src/main/java/ba/unsa/etf/rpr/controllers/LogInController.java,f\7\f710fa95dfa8169848df7e9845295d014a9fd8ee
+k
+;src/main/java/ba/unsa/etf/rpr/domain/OmiljenaOperacija.java,9\b\9b01286b77b3242a9b0e5acfb814c524b872bd6c
+r
+Bsrc/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDaoSQLImpl.java,6\2\62688010e09a3a03391d0191145242f4eb4937ff
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec

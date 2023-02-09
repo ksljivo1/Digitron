@@ -16,16 +16,32 @@ public class DigitronParser {
     public Stack<Pair<Tokens, String>> evaluate() throws Exception {
         Stack<Pair<Tokens, String>> numberTokens = new Stack<>();
         Stack<Pair<Tokens, String>> operationTokens = new Stack<>();
-        Double rez = 0.;
+        parse(numberTokens, operationTokens, tokens);
+        while(!operationTokens.empty()) {
+            double op2 = Double.parseDouble(numberTokens.pop().getValue());
+            double op1 = Double.parseDouble(numberTokens.pop().getValue());
+            String op = operationTokens.pop().getValue();
+            Double rez = evaluateBinary(op1, op2, op);
+            numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
+        }
+        return numberTokens;
+    }
+
+    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) {
         int i = 0;
+        Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {
             Pair<Tokens, String> current = tokens.get(i);
             if(numberTokens.size() >= 2 && !operationTokens.empty() && hasHigherPrecedence(operationTokens.peek())) {
                 double op2 = Double.parseDouble(numberTokens.pop().getValue());
                 double op1 = Double.parseDouble(numberTokens.pop().getValue());
                 String op = operationTokens.pop().getValue();
-                rez = evaluateBinary(op1, op2, op);
-                if(rez.isNaN() || rez.isInfinite()) throw new Exception("ERROR: Division by zero");
+                try {
+                    rez = evaluateBinary(op1, op2, op);
+                }
+                catch (RuntimeException runtimeException) {
+                    System.out.println(runtimeException.getMessage());
+                }
                 numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
                 i--;
             }
@@ -50,14 +66,6 @@ public class DigitronParser {
             else;
             i++;
         }
-        while(!operationTokens.empty()) {
-            double op2 = Double.parseDouble(numberTokens.pop().getValue());
-            double op1 = Double.parseDouble(numberTokens.pop().getValue());
-            String op = operationTokens.pop().getValue();
-            rez = evaluateBinary(op1, op2, op);
-            numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
-        }
-        return numberTokens;
     }
 
     private static boolean isNumberToken(Pair<Tokens, String> token) {
@@ -80,6 +88,10 @@ public class DigitronParser {
         if(op.equals("+")) return a + b;
         else if(op.equals("-")) return a - b;
         else if(op.equals("*")) return a * b;
-        else return a / b;
+        else {
+            Double rez = a / b;
+            if(rez.isNaN() || rez.isInfinite()) throw new RuntimeException("ERROR: Division by zero");
+            return rez;
+        }
     }
 }
