@@ -2,7 +2,6 @@ package ba.unsa.etf.rpr;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -32,18 +31,47 @@ public class DigitronParser {
         Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {
             Pair<Tokens, String> current = tokens.get(i);
-            if(numberTokens.size() >= 2 && !operationTokens.empty() && hasHigherPrecedence(operationTokens.peek())) {
-                double op2 = Double.parseDouble(numberTokens.pop().getValue());
-                double op1 = Double.parseDouble(numberTokens.pop().getValue());
-                String op = operationTokens.pop().getValue();
-                try {
-                    rez = evaluateBinary(op1, op2, op);
+            if(isLPARENTHESISToken(current)) numberTokens.push(current);
+            else if(isRPARENTHESISToken(current)) {
+                Pair<Tokens, String> isprazni2 = numberTokens.pop();
+                Pair<Tokens, String> isprazni1 = numberTokens.pop();
+                while(!isLPARENTHESISToken(isprazni1)) {
+                    double op2 = Double.parseDouble(isprazni2.getValue());
+                    double op1 = Double.parseDouble(isprazni1.getValue());
+                    String op = operationTokens.pop().getValue();
+                    try {
+                        rez = evaluateBinary(op1, op2, op);
+                    } catch (RuntimeException runtimeException) {
+                        System.out.println(runtimeException.getMessage());
+                    }
+                    numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
+                    isprazni2 = numberTokens.pop();
+                    isprazni1 = numberTokens.pop();
                 }
-                catch (RuntimeException runtimeException) {
-                    System.out.println(runtimeException.getMessage());
+                numberTokens.push(isprazni2);
+            }
+            else if(numberTokens.size() >= 2 && !operationTokens.empty() && hasHigherPrecedence(operationTokens.peek())) {
+                Pair<Tokens, String> op2Token = numberTokens.pop();
+                Pair<Tokens, String> op1Token = numberTokens.pop();
+                if(isLPARENTHESISToken(op2Token) || isLPARENTHESISToken(op1Token)) {
+                    numberTokens.push(op1Token);
+                    numberTokens.push(op2Token);
+                    if(isOperationToken(current)) operationTokens.push(current);
+                    else if(isNumberToken(current) || isLPARENTHESISToken(current)) numberTokens.push(current);
+                    else ;
                 }
-                numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
-                i--;
+                else {
+                    double op2 = Double.parseDouble(op2Token.getValue());
+                    double op1 = Double.parseDouble(op1Token.getValue());
+                    String op = operationTokens.pop().getValue();
+                    try {
+                        rez = evaluateBinary(op1, op2, op);
+                    } catch (RuntimeException runtimeException) {
+                        System.out.println(runtimeException.getMessage());
+                    }
+                    numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
+                    i--;
+                }
             }
             else if(numberTokens.size() >= 2 && !operationTokens.empty() && !hasHigherPrecedence(operationTokens.peek())) {
                 int t = i;
@@ -53,12 +81,23 @@ public class DigitronParser {
                     i = t + 1;
                 }
                 else {
-                    double op2 = Double.parseDouble(numberTokens.pop().getValue());
-                    double op1 = Double.parseDouble(numberTokens.pop().getValue());
-                    String op = operationTokens.pop().getValue();
-                    rez = evaluateBinary(op1, op2, op);
-                    numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
-                    i--;
+                    Pair<Tokens, String> op2Token = numberTokens.pop();
+                    Pair<Tokens, String> op1Token = numberTokens.pop();
+                    if(isLPARENTHESISToken(op2Token) || isLPARENTHESISToken(op1Token)) {
+                        numberTokens.push(op1Token);
+                        numberTokens.push(op2Token);
+                        if(isOperationToken(current)) operationTokens.push(current);
+                        else if(isNumberToken(current) || isLPARENTHESISToken(current)) numberTokens.push(current);
+                        else ;
+                    }
+                    else {
+                        double op2 = Double.parseDouble(op2Token.getValue());
+                        double op1 = Double.parseDouble(op1Token.getValue());
+                        String op = operationTokens.pop().getValue();
+                        rez = evaluateBinary(op1, op2, op);
+                        numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
+                        i--;
+                    }
                 }
             }
             else if(isOperationToken(current)) operationTokens.push(current);
