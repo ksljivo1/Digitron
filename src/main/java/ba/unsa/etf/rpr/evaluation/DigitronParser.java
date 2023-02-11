@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr;
+package ba.unsa.etf.rpr.evaluation;
 
 import javafx.util.Pair;
 

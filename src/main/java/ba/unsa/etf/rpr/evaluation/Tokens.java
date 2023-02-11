@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr;
+package ba.unsa.etf.rpr.evaluation;
 
 public enum Tokens {
     PLUS,
