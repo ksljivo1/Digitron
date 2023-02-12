@@ -2,6 +2,8 @@ package ba.unsa.etf.rpr.evaluation;
 
 import javafx.util.Pair;
 
+import java.io.IOException;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
@@ -12,21 +14,27 @@ public class DigitronParser {
         this.tokens = tokens;
     }
 
-    public Stack<Pair<Tokens, String>> evaluate() throws Exception {
+    public Stack<Pair<Tokens, String>> evaluate() throws IOException {
         Stack<Pair<Tokens, String>> numberTokens = new Stack<>();
         Stack<Pair<Tokens, String>> operationTokens = new Stack<>();
-        parse(numberTokens, operationTokens, tokens);
-        while(!operationTokens.empty()) {
-            double op2 = Double.parseDouble(numberTokens.pop().getValue());
-            double op1 = Double.parseDouble(numberTokens.pop().getValue());
-            String op = operationTokens.pop().getValue();
-            Double rez = evaluateBinary(op1, op2, op);
-            numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
+        try {
+            parse(numberTokens, operationTokens, tokens);
+            while (!operationTokens.empty()) {
+                double op2 = Double.parseDouble(numberTokens.pop().getValue());
+                double op1 = Double.parseDouble(numberTokens.pop().getValue());
+                String op = operationTokens.pop().getValue();
+                Double rez = evaluateBinary(op1, op2, op);
+                numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
+            }
         }
+        catch (EmptyStackException | NumberFormatException | IndexOutOfBoundsException e) {
+            throw new IOException("Syntax error");
+        }
+        if(numberTokens.size() != 1 || !operationTokens.empty()) throw new IOException("Syntax error");
         return numberTokens;
     }
 
-    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) throws Exception {
+    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) throws EmptyStackException, IOException {
         int i = 0;
         Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {
@@ -39,11 +47,7 @@ public class DigitronParser {
                     double op2 = Double.parseDouble(isprazni2.getValue());
                     double op1 = Double.parseDouble(isprazni1.getValue());
                     String op = operationTokens.pop().getValue();
-                    try {
-                        rez = evaluateBinary(op1, op2, op);
-                    } catch (RuntimeException runtimeException) {
-                        System.out.println(runtimeException.getMessage());
-                    }
+                    rez = evaluateBinary(op1, op2, op);
                     numberTokens.push(new Pair<>(Tokens.DOUBLE, String.valueOf(rez)));
                     isprazni2 = numberTokens.pop();
                     isprazni1 = numberTokens.pop();
@@ -131,13 +135,13 @@ public class DigitronParser {
         return token.getKey() == Tokens.DIVIDE || token.getKey() == Tokens.MULTIPLY;
     }
 
-    private static double evaluateBinary(double a, double b, String op) {
+    private static double evaluateBinary(double a, double b, String op) throws IOException {
         if(op.equals("+")) return a + b;
         else if(op.equals("-")) return a - b;
         else if(op.equals("*")) return a * b;
         else {
             Double rez = a / b;
-            if(rez.isNaN() || rez.isInfinite()) throw new ArithmeticException("ERROR: Division by zero");
+            if(rez.isNaN() || rez.isInfinite()) throw new IOException("ERROR: Division by zero");
             return rez;
         }
     }

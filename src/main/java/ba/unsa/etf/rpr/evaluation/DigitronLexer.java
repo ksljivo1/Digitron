@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.evaluation;
 
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class DigitronLexer {
         tokens = new ArrayList<>();
     }
 
-    public void tokenize(String expr) throws Exception {
+    public void tokenize(String expr) throws IOException {
         int poz = 0;
         while(poz < expr.length()) {
             char current = expr.charAt(poz);
@@ -21,7 +22,12 @@ public class DigitronLexer {
             else if(current == '*') tokens.add(new Pair(Tokens.MULTIPLY, "*"));
             else if(current == '/') tokens.add(new Pair(Tokens.DIVIDE, "/"));
             else if(current == '(') tokens.add(new Pair(Tokens.LPARENTHESIS, "("));
-            else if(current == ')') tokens.add(new Pair(Tokens.RPARENTHESIS, ")"));
+
+            else if(current == ')') {
+                if(tokens.size() != 0 && tokens.get(tokens.size() - 1).getValue().equals("("))
+                    throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
+                tokens.add(new Pair(Tokens.RPARENTHESIS, ")"));
+            }
             else if(Character.isDigit(current)) {
                 StringBuilder broj = new StringBuilder();
                 int poz1 = poz;
@@ -34,13 +40,13 @@ public class DigitronLexer {
                     Double.parseDouble(str);
                 }
                 catch (NumberFormatException numberFormatException) {
-                    throw new Exception("Expected a valid token at position: " + poz + " instead recieved: " + current);
+                    throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
                 }
                 tokens.add(new Pair(Tokens.DOUBLE, str));
                 poz = poz1 - 1;
             }
             else if(current == ' ') ;
-            else throw new Exception("Expected a valid token at position: " + poz + " instead recieved: " + current);
+            else throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
             poz = poz + 1;
         }
         tokens.add(new Pair(Tokens.EOF, "EOF"));
