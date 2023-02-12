@@ -17,16 +17,15 @@ public class DigitronLexer {
         int poz = 0;
         while(poz < expr.length()) {
             char current = expr.charAt(poz);
-            if(current == '+') tokens.add(new Pair(Tokens.PLUS, "+"));
-            else if(current == '-') tokens.add(new Pair(Tokens.MINUS, "-"));
-            else if(current == '*') tokens.add(new Pair(Tokens.MULTIPLY, "*"));
-            else if(current == '/') tokens.add(new Pair(Tokens.DIVIDE, "/"));
-            else if(current == '(') tokens.add(new Pair(Tokens.LPARENTHESIS, "("));
-
+            if(current == '+') tokens.add(new Pair<>(Tokens.PLUS, "+"));
+            else if(current == '-') tokens.add(new Pair<>(Tokens.MINUS, "-"));
+            else if(current == '*') tokens.add(new Pair<>(Tokens.MULTIPLY, "*"));
+            else if(current == '/') tokens.add(new Pair<>(Tokens.DIVIDE, "/"));
+            else if(current == '(') tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
             else if(current == ')') {
                 if(tokens.size() != 0 && tokens.get(tokens.size() - 1).getValue().equals("("))
                     throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
-                tokens.add(new Pair(Tokens.RPARENTHESIS, ")"));
+                tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
             }
             else if(Character.isDigit(current)) {
                 StringBuilder broj = new StringBuilder();
@@ -39,17 +38,27 @@ public class DigitronLexer {
                 try {
                     Double.parseDouble(str);
                 }
-                catch (NumberFormatException numberFormatException) {
+                catch(NumberFormatException numberFormatException) {
                     throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
                 }
-                tokens.add(new Pair(Tokens.DOUBLE, str));
+                // podrska za unarni minus
+                if((tokens.size() >= 2 && tokens.get(tokens.size() - 1).getValue().equals("-") && tokens.get(tokens.size() - 2).getValue().equals("(")) ||
+                        (tokens.size() == 1 && tokens.get(0).getValue().equals("-"))) {
+                    tokens.remove(tokens.size() - 1);
+                    tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
+                    tokens.add(new Pair<>(Tokens.DOUBLE, "0"));
+                    tokens.add(new Pair<>(Tokens.MINUS, "-"));
+                    tokens.add(new Pair<>(Tokens.DOUBLE, str));
+                    tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
+                }
+                else tokens.add(new Pair<>(Tokens.DOUBLE, str));
                 poz = poz1 - 1;
             }
-            else if(current == ' ') ;
+            else if(Character.isWhitespace(current)) ;
             else throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
             poz = poz + 1;
         }
-        tokens.add(new Pair(Tokens.EOF, "EOF"));
+        tokens.add(new Pair<>(Tokens.EOF, "EOF"));
     }
 
     public List<Pair<Tokens, String>>  getTokens() {
