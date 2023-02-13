@@ -12,7 +12,11 @@ public class DigitronParser {
 
     public DigitronParser(String expr) throws IOException {
         DigitronLexer digitronLexer = new DigitronLexer();
-        digitronLexer.tokenize(expr);
+        try {
+            digitronLexer.tokenize(expr);
+        } catch (IOException e) {
+            throw new IOException("Syntax error");
+        }
         tokens = digitronLexer.getTokens();
     }
 

@@ -33,8 +33,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -174,83 +172,93 @@ public class DigitronController {
     }
 
     public void btn0Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("0");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("0");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "0");
         }
+        else display.setText(tekst + " 0");
     }
 
     public void btn1Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("1");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("1");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "1");
         }
+        else display.setText(tekst + " 1");
     }
 
     public void btn2Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("2");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("2");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "2");
         }
+        else display.setText(tekst + " 2");
     }
 
     public void btn3Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("3");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("3");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "3");
         }
+        else display.setText(tekst + " 3");
     }
 
     public void btn4Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("4");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("4");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "4");
         }
+        else display.setText(tekst + " 4");
     }
 
     public void btn5Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("5");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("5");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "5");
         }
+        else display.setText(tekst + " 5");
     }
 
     public void btn6Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("6");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("6");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "6");
         }
+        else display.setText(tekst + " 6");
     }
 
     public void btn7Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("7");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("7");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "7");
         }
+        else display.setText(tekst + " 7");
     }
 
     public void btn8Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("8");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("8");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) ||tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "8");
         }
+        else display.setText(tekst + " 8");
     }
 
     public void btn9Click(ActionEvent actionEvent) {
-        String tekst = display.getText();
-        if(tekst.equals("0") || tekst.contains("=")) display.setText("9");
-        else {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("9");
+        else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
             display.setText(tekst + "9");
         }
+        else display.setText(tekst + " 9");
     }
 
     public void dotBtnClicked(ActionEvent actionEvent) {

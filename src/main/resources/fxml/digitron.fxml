@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.DigitronController">
 
@@ -37,10 +38,13 @@
         <Button fx:id="dividesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dividesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="/" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Button fx:id="timesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#multipliesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="x" GridPane.columnIndex="2" GridPane.rowIndex="3" />
         <Button fx:id="minusBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#minusBtnClicked" prefHeight="25.0" prefWidth="52.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-        <Label fx:id="display" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="293.0" text="0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+        <Label fx:id="display" maxWidth="1.7976931348623157E308" text="0" GridPane.columnSpan="4" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets />
-            </GridPane.margin></Label>
+            </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></Label>
         <Button fx:id="btn7" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn7Click" prefHeight="25.0" prefWidth="67.0" text="7" GridPane.rowIndex="4" />
         <Button fx:id="btn8" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn8Click" prefHeight="25.0" prefWidth="72.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <Button fx:id="btn9" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn9Click" prefHeight="25.0" prefWidth="72.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="4" />
@@ -73,10 +77,10 @@
             </HBox>
          </right>
       </BorderPane>
-      <Label fx:id="resultLabel" />
-      <Button mnemonicParsing="false" onAction="#leftParenthesisClick" prefHeight="25.0" prefWidth="71.0" text="(" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#rightParenthesisClick" prefHeight="25.0" prefWidth="73.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="backspaceBtn" mnemonicParsing="false" onAction="#backspaceClick" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+      <Label fx:id="resultLabel" textFill="#858181" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leftParenthesisClick" prefHeight="25.0" prefWidth="71.0" text="(" GridPane.rowIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightParenthesisClick" prefHeight="25.0" prefWidth="73.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="backspaceBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backspaceClick" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
