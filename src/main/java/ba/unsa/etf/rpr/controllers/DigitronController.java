@@ -292,23 +292,22 @@ public class DigitronController {
 
     public void equalsBtnClicked(ActionEvent actionEvent) throws DigitronException {
         String expr = display.getText();
+        Animation animation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(1500));
+                setInterpolator(Interpolator.EASE_OUT);
+            }
+            @Override
+            protected void interpolate(double frac) {
+                Color vColor = new Color(0.5, 1, 0.5, 1 - frac);
+                display.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+        };
         try {
             DigitronParser digitronParser = new DigitronParser(expr);
             double rez = Double.parseDouble(digitronParser.evaluate().peek().getValue()) + 0.0;
             resultLabel.setText(expr + " = ");
             display.setText(rez + "");
-
-            final Animation animation = new Transition() {
-                {
-                    setCycleDuration(Duration.millis(1500));
-                    setInterpolator(Interpolator.EASE_OUT);
-                }
-                @Override
-                protected void interpolate(double frac) {
-                    Color vColor = new Color(0.5, 1, 0.5, 1 - frac);
-                    display.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-            };
             animation.play();
 
             Racun racun = new Racun();
@@ -326,6 +325,19 @@ public class DigitronController {
         catch(IOException ioException) {
             resultLabel.setText(expr + " = ");
             display.setText(ioException.getMessage());
+
+            animation = new Transition() {
+                {
+                    setCycleDuration(Duration.millis(1500));
+                    setInterpolator(Interpolator.EASE_OUT);
+                }
+                @Override
+                protected void interpolate(double frac) {
+                    Color vColor = new Color(1, 0.5, 0.5, 1 - frac);
+                    display.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            };
+            animation.play();
         }
     }
 
