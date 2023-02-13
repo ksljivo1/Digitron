@@ -259,22 +259,22 @@ public class DigitronController {
     }
 
     public void minusBtnClicked(ActionEvent actionEvent) {
-        String tekst = display.getText();
+        String tekst = display.getText().strip();
         display.setText(tekst + " - ");
     }
 
     public void multipliesBtnClicked(ActionEvent actionEvent) {
-        String tekst = display.getText();
+        String tekst = display.getText().strip();
         display.setText(tekst + " * ");
     }
 
     public void dividesBtnClicked(ActionEvent actionEvent) {
-        String tekst = display.getText();
+        String tekst = display.getText().strip();
         display.setText(tekst + " / ");
     }
 
     public void plusBtnClicked(ActionEvent actionEvent) {
-        String tekst = display.getText();
+        String tekst = display.getText().strip();
         display.setText(tekst + " + ");
     }
 
@@ -304,7 +304,7 @@ public class DigitronController {
     }
 
     public void leftParenthesisClick(ActionEvent actionEvent) {
-        String tekst = display.getText();
+        String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=")) display.setText("(");
         else {
             display.setText(tekst + " (");
@@ -312,7 +312,7 @@ public class DigitronController {
     }
 
     public void rightParenthesisClick(ActionEvent actionEvent) {
-        String tekst = display.getText();
+        String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=")) display.setText(")");
         else {
             display.setText(tekst + " )");
@@ -320,10 +320,13 @@ public class DigitronController {
     }
 
     public void backspaceClick(ActionEvent actionEvent) {
-        String text = display.getText();
+        String text = display.getText().strip();
+        if(text.isEmpty()) return;
         int n = text.length() - 1;
-        while(n >= 0 && text.charAt(n) != ' ') n--;
-        display.setText(text.substring(0, n));
+        while(n > 0 && text.charAt(n) == ' ') n--;
+        text = text.substring(0, n);
+        text = text.strip();
+        display.setText(text);
     }
 
     public void cBtnClicked(ActionEvent actionEvent) {
