@@ -49,6 +49,7 @@ public class DigitronController {
     public Label brojPonavljanjaLabel;
     public Label resultLabel;
     public Button backspaceBtn;
+    public GridPane background;
     private Korisnik korisnik;
     private RacunDaoSQLImpl racunDaoSQL;
     private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
@@ -163,7 +164,8 @@ public class DigitronController {
     }
 
     @FXML
-    public void initialize() throws DigitronException {
+    public void initialize() {
+        background.getStyleClass().add("lightModeBackground");
         Label praznaHistorija = new Label("Calculation history is empty");
         praznaHistorija.setTextFill(Color.SLATEBLUE);
         historyView.setPlaceholder(praznaHistorija);

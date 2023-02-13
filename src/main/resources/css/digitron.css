@@ -1,0 +1,3 @@
+.lightModeBackground {
+    -fx-background-color: linear-gradient(to bottom right, rgb(250, 250, 250), rgb(225, 234, 238));
+}
