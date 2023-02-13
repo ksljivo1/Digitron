@@ -10,22 +10,26 @@ import ba.unsa.etf.rpr.exceptions.DigitronException;
 import ba.unsa.etf.rpr.models.OmiljenaOperacijaModel;
 import ba.unsa.etf.rpr.models.RacunModel;
 import ba.unsa.etf.rpr.models.RacuniModel;
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.PauseTransition;
+import javafx.animation.Transition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -293,6 +297,20 @@ public class DigitronController {
             double rez = Double.parseDouble(digitronParser.evaluate().peek().getValue()) + 0.0;
             resultLabel.setText(expr + " = ");
             display.setText(rez + "");
+
+            final Animation animation = new Transition() {
+                {
+                    setCycleDuration(Duration.millis(1500));
+                    setInterpolator(Interpolator.EASE_OUT);
+                }
+                @Override
+                protected void interpolate(double frac) {
+                    Color vColor = new Color(0.5, 1, 0.5, 1 - frac);
+                    display.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            };
+            animation.play();
+
             Racun racun = new Racun();
             racun.setRezultat(expr + " = " + rez);
             racun.setIdKorisnik(korisnik.getId());

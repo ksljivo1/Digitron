@@ -25,8 +25,6 @@ Z
 *src/main/java/ba/unsa/etf/rpr/dao/Dao.java,a\1\a1348960998eebe088bc844c2afaaa6dd9d147f9
 e
 5src/main/java/ba/unsa/etf/rpr/models/RacuniModel.java,8\a\8ad14d2e46ae806c9e41750cdc0100d220438574
-u
-Esrc/main/java/ba/unsa/etf/rpr/controllers/RegistracijaController.java,9\0\9078bd05f5a1f0b8f8388d81fef204fbab6271f3
 d
 4src/main/java/ba/unsa/etf/rpr/models/RacunModel.java,9\1\9117bfdb2f6637d5d5b1da164e24b3503926d776
 p
