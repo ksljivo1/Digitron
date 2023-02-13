@@ -10,8 +10,10 @@ import java.util.Stack;
 public class DigitronParser {
     List<Pair<Tokens, String>> tokens;
 
-    public DigitronParser(List<Pair<Tokens, String>> tokens) {
-        this.tokens = tokens;
+    public DigitronParser(String expr) throws IOException {
+        DigitronLexer digitronLexer = new DigitronLexer();
+        digitronLexer.tokenize(expr);
+        tokens = digitronLexer.getTokens();
     }
 
     public Stack<Pair<Tokens, String>> evaluate() throws IOException {

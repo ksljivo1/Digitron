@@ -43,3 +43,5 @@ q
 Asrc/main/java/ba/unsa/etf/rpr/controllers/DigitronController.java,8\5\859ca4aa496026d2996ac7cbfbc68cdead8fe30b
 d
 4src/main/java/ba/unsa/etf/rpr/evaluation/Tokens.java,b\7\b734f527e144024a7a30f582beaac36da4649d7f
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
