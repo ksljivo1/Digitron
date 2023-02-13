@@ -74,9 +74,9 @@
          </right>
       </BorderPane>
       <Label fx:id="resultLabel" />
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="(" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="backspaceBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#leftParenthesisClick" prefHeight="25.0" prefWidth="71.0" text="(" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#rightParenthesisClick" prefHeight="25.0" prefWidth="73.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="backspaceBtn" mnemonicParsing="false" onAction="#backspaceClick" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

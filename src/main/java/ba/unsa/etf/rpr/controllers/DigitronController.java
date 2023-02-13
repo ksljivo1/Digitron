@@ -168,7 +168,7 @@ public class DigitronController {
 
         ImageView image = new ImageView("slike/backspace.png");
         image.setFitHeight(15);
-        image.setFitWidth(60);
+        image.setFitWidth(15);
         image.setPreserveRatio(true);
         backspaceBtn.setGraphic(image);
     }
@@ -301,6 +301,29 @@ public class DigitronController {
             resultLabel.setText(expr + " = ");
             display.setText(ioException.getMessage());
         }
+    }
+
+    public void leftParenthesisClick(ActionEvent actionEvent) {
+        String tekst = display.getText();
+        if(tekst.equals("0") || tekst.contains("=")) display.setText("(");
+        else {
+            display.setText(tekst + " (");
+        }
+    }
+
+    public void rightParenthesisClick(ActionEvent actionEvent) {
+        String tekst = display.getText();
+        if(tekst.equals("0") || tekst.contains("=")) display.setText(")");
+        else {
+            display.setText(tekst + " )");
+        }
+    }
+
+    public void backspaceClick(ActionEvent actionEvent) {
+        String text = display.getText();
+        int n = text.length() - 1;
+        while(n >= 0 && text.charAt(n) != ' ') n--;
+        display.setText(text.substring(0, n));
     }
 
     public void cBtnClicked(ActionEvent actionEvent) {
