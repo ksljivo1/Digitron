@@ -39,8 +39,6 @@ k
 ;src/main/java/ba/unsa/etf/rpr/domain/OmiljenaOperacija.java,9\b\9b01286b77b3242a9b0e5acfb814c524b872bd6c
 r
 Bsrc/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDaoSQLImpl.java,6\2\62688010e09a3a03391d0191145242f4eb4937ff
-q
-Asrc/main/java/ba/unsa/etf/rpr/controllers/DigitronController.java,8\5\859ca4aa496026d2996ac7cbfbc68cdead8fe30b
 d
 4src/main/java/ba/unsa/etf/rpr/evaluation/Tokens.java,b\7\b734f527e144024a7a30f582beaac36da4649d7f
 7

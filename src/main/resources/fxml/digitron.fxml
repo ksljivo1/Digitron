@@ -20,40 +20,41 @@
       <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>
+        <RowConstraints />
         <RowConstraints vgrow="ALWAYS" />
         <RowConstraints vgrow="ALWAYS" />
         <RowConstraints vgrow="ALWAYS" />
         <RowConstraints vgrow="ALWAYS" />
         <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Button fx:id="modBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cBtnClicked" prefHeight="25.0" prefWidth="52.0" text="C" GridPane.rowIndex="1" />
-        <Button fx:id="dividesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dividesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="/" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Button fx:id="timesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#multipliesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="x" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <Button fx:id="minusBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#minusBtnClicked" prefHeight="25.0" prefWidth="52.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-        <Label fx:id="display" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="238.0" text="0" GridPane.columnSpan="4">
+        <Button fx:id="modBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cBtnClicked" prefHeight="25.0" prefWidth="52.0" text="C" GridPane.rowIndex="2" />
+        <Button fx:id="dividesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dividesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="/" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Button fx:id="timesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#multipliesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="x" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Button fx:id="minusBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#minusBtnClicked" prefHeight="25.0" prefWidth="52.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <Label fx:id="display" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="293.0" text="0" GridPane.columnSpan="4" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets />
             </GridPane.margin></Label>
-        <Button fx:id="btn7" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn7Click" prefHeight="25.0" prefWidth="52.0" text="7" GridPane.rowIndex="2" />
-        <Button fx:id="btn8" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn8Click" prefHeight="25.0" prefWidth="52.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <Button fx:id="btn9" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn9Click" prefHeight="25.0" prefWidth="52.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <Button fx:id="btn4" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn4Click" prefHeight="25.0" prefWidth="52.0" text="4" GridPane.rowIndex="3" />
-        <Button fx:id="btn5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn5Click" prefHeight="25.0" prefWidth="52.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <Button fx:id="btn6" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn6Click" prefHeight="25.0" prefWidth="52.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-        <Button fx:id="plusBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plusBtnClicked" prefHeight="63.0" prefWidth="52.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.rowSpan="2" />
-        <Button fx:id="btn1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn1Click" prefHeight="25.0" prefWidth="52.0" text="1" GridPane.rowIndex="4" />
-        <Button fx:id="btn2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn2Click" prefHeight="25.0" prefWidth="52.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <Button fx:id="btn3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn3Click" prefHeight="25.0" prefWidth="52.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-        <Button fx:id="equalsBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#equalsBtnClicked" prefHeight="62.0" prefWidth="52.0" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-        <Button fx:id="btn0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn0Click" prefHeight="25.0" prefWidth="116.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-        <Button fx:id="dotBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dotBtnClicked" prefHeight="25.0" prefWidth="52.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <ListView fx:id="historyView" editable="true" prefHeight="182.0" prefWidth="303.0" GridPane.columnIndex="4" GridPane.rowSpan="6" />
-      <BorderPane prefHeight="0.0" prefWidth="303.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+        <Button fx:id="btn7" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn7Click" prefHeight="25.0" prefWidth="52.0" text="7" GridPane.rowIndex="3" />
+        <Button fx:id="btn8" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn8Click" prefHeight="25.0" prefWidth="52.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button fx:id="btn9" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn9Click" prefHeight="25.0" prefWidth="52.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+        <Button fx:id="btn4" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn4Click" prefHeight="25.0" prefWidth="52.0" text="4" GridPane.rowIndex="4" />
+        <Button fx:id="btn5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn5Click" prefHeight="25.0" prefWidth="52.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Button fx:id="btn6" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn6Click" prefHeight="25.0" prefWidth="52.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <Button fx:id="plusBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plusBtnClicked" prefHeight="63.0" prefWidth="52.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.rowSpan="2" />
+        <Button fx:id="btn1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn1Click" prefHeight="25.0" prefWidth="52.0" text="1" GridPane.rowIndex="5" />
+        <Button fx:id="btn2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn2Click" prefHeight="25.0" prefWidth="52.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Button fx:id="btn3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn3Click" prefHeight="25.0" prefWidth="52.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+        <Button fx:id="equalsBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#equalsBtnClicked" prefHeight="62.0" prefWidth="52.0" text="=" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.rowSpan="2" />
+        <Button fx:id="btn0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn0Click" prefHeight="25.0" prefWidth="116.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+        <Button fx:id="dotBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dotBtnClicked" prefHeight="25.0" prefWidth="52.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <ListView fx:id="historyView" editable="true" prefHeight="182.0" prefWidth="339.0" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="6" />
+      <BorderPane prefHeight="0.0" prefWidth="303.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
          <left>
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
@@ -71,6 +72,7 @@
             </HBox>
          </right>
       </BorderPane>
+      <Label fx:id="resultLabel" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr;
 
-import ba.unsa.etf.rpr.evaluation.DigitronLexer;
 import ba.unsa.etf.rpr.evaluation.DigitronParser;
 
 import java.io.IOException;
@@ -9,7 +8,7 @@ public class Digitron {
 
     public static void main(String[] args) {
         try {
-            DigitronParser digitronParser = new DigitronParser("1 + 2");
+            DigitronParser digitronParser = new DigitronParser("(1 - 2 - (1 + 3) * 2 / 2)");
             System.out.println(digitronParser.evaluate());
         }
         catch (IOException e) {

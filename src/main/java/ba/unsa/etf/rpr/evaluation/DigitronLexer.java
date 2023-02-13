@@ -37,7 +37,7 @@ public class DigitronLexer {
             }
             else if(current == ')') {
                 if(tokens.size() != 0 && tokens.get(tokens.size() - 1).getValue().equals("("))
-                    throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
+                    throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
                 tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
             }
             else if(Character.isDigit(current)) {
@@ -52,7 +52,7 @@ public class DigitronLexer {
                     Double.parseDouble(str);
                 }
                 catch(NumberFormatException numberFormatException) {
-                    throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
+                    throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
                 }
                 // podrska za unarni minus
                 if((tokens.size() >= 2 && tokens.get(tokens.size() - 1).getValue().equals("-") && tokens.get(tokens.size() - 2).getValue().equals("(")) ||
@@ -68,7 +68,7 @@ public class DigitronLexer {
                 poz = poz1 - 1;
             }
             else if(Character.isWhitespace(current)) ;
-            else throw new IOException("Expected a valid token at position: " + poz + " instead recieved: " + current);
+            else throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
             poz = poz + 1;
         }
         tokens.add(new Pair<>(Tokens.EOF, "EOF"));
