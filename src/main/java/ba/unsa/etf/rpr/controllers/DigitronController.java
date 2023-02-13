@@ -46,6 +46,7 @@ public class DigitronController {
     public Label omiljenaOperacijaLabel;
     public Label brojPonavljanjaLabel;
     public Label resultLabel;
+    public Button backspaceBtn;
     private Korisnik korisnik;
     private RacunDaoSQLImpl racunDaoSQL;
     private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
@@ -164,6 +165,12 @@ public class DigitronController {
         Label praznaHistorija = new Label("Calculation history is empty");
         praznaHistorija.setTextFill(Color.SLATEBLUE);
         historyView.setPlaceholder(praznaHistorija);
+
+        ImageView image = new ImageView("slike/backspace.png");
+        image.setFitHeight(15);
+        image.setFitWidth(60);
+        image.setPreserveRatio(true);
+        backspaceBtn.setGraphic(image);
     }
 
     public void btn0Click(ActionEvent actionEvent) {
