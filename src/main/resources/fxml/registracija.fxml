@@ -11,14 +11,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" prefHeight="105.0" prefWidth="444.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.RegistracijaController">
+<GridPane alignment="CENTER" hgap="4.0" vgap="4.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.RegistracijaController">
    <stylesheets>
        <URL value="@/css/registration.css" />
    </stylesheets>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
@@ -27,35 +26,51 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label text="Username:">
+        <Label text="Enter username:">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </Label>
-        <Label text="Password:" GridPane.rowIndex="1">
+        <Label text="Enter password:" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </Label>
-        <TextField fx:id="textFld" prefWidth="129.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+        <TextField fx:id="textFld" prefWidth="129.0" promptText="At least 8 characters" GridPane.columnIndex="1" GridPane.columnSpan="2">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </TextField>
-        <PasswordField fx:id="passwordFld" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+        <PasswordField fx:id="passwordFld" promptText="At least 8 characters" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </PasswordField>
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+        <ButtonBar prefHeight="25.0" prefWidth="234.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#onBtnClicked" prefHeight="25.0" prefWidth="88.0" text="Register" />
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#onBtnClicked" prefHeight="25.0" prefWidth="88.0" text="Register" />
             </buttons>
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </ButtonBar>
-      <Label fx:id="userNameLabel" GridPane.columnIndex="3" />
-      <Label fx:id="passwordLabel" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <GridPane alignment="CENTER" GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" text="Cancel">
+               <GridPane.margin>
+                  <Insets left="3.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
     </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </GridPane>

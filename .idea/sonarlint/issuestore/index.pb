@@ -39,3 +39,7 @@ d
 4src/main/java/ba/unsa/etf/rpr/evaluation/Tokens.java,b\7\b734f527e144024a7a30f582beaac36da4649d7f
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+^
+.src/main/java/ba/unsa/etf/rpr/DigitronApp.java,d\8\d8e6f8ca64c2086b2a1333b69b30bb7b4906f0e3
+k
+;src/main/java/ba/unsa/etf/rpr/evaluation/DigitronLexer.java,2\1\2106a2d5ed7636551a5ad9634071ba2f96e0ab31

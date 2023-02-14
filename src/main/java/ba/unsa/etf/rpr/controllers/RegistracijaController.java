@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 public class RegistracijaController {
     public TextField textFld;
     public PasswordField passwordFld;
-    public Label userNameLabel;
-    public Label passwordLabel;
     private KorisnikDaoSQLImpl korisnikDaoSQLImpl;
     private boolean neispravanUnos = true;
     private boolean duplikatUBazi = false;
@@ -30,24 +28,20 @@ public class RegistracijaController {
             if(n.strip().length() < 8) {
                 textFld.getStyleClass().removeAll("poljeJeIspravno");
                 textFld.getStyleClass().add("poljeNijeIspravno");
-                userNameLabel.setText("At least 8 characters");
             }
             else {
                 textFld.getStyleClass().removeAll("poljeNijeIspravno");
                 textFld.getStyleClass().add("poljeJeIspravno");
-                userNameLabel.setText("");
             }
         });
         passwordFld.textProperty().addListener((observableValue, o, n) -> {
                 if(n.strip().length() < 8) {
                     passwordFld.getStyleClass().removeAll("poljeJeIspravno");
                     passwordFld.getStyleClass().add("poljeNijeIspravno");
-                    passwordLabel.setText("At least 8 characters");
                 }
                 else {
                     passwordFld.getStyleClass().removeAll("poljeNijeIspravno");
                     passwordFld.getStyleClass().add("poljeJeIspravno");
-                    passwordLabel.setText("");
                 }
             }
         );
