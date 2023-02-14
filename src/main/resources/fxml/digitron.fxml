@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,81 +12,181 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<?import java.net.URL?>
-<GridPane fx:id="background" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.DigitronController">
-    <stylesheets>
-        <URL value="@/css/digitron.css" />
-    </stylesheets>
-    <columnConstraints>
-        <ColumnConstraints />
-        <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="ALWAYS" />
-      <ColumnConstraints hgrow="ALWAYS" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints />
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-    </rowConstraints>
-    <children>
-        <Button fx:id="modBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cBtnClicked" prefHeight="25.0" prefWidth="52.0" text="C" GridPane.rowIndex="3" />
-        <Button fx:id="dividesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dividesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="/" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <Button fx:id="timesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#multipliesBtnClicked" prefHeight="25.0" prefWidth="52.0" text="x" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-        <Button fx:id="minusBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#minusBtnClicked" prefHeight="25.0" prefWidth="52.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-        <Label fx:id="display" maxWidth="1.7976931348623157E308" text="0" GridPane.columnSpan="4" GridPane.rowIndex="1">
-            <GridPane.margin>
-                <Insets />
-            </GridPane.margin>
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-        <Button fx:id="btn7" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn7Click" prefHeight="25.0" prefWidth="67.0" text="7" GridPane.rowIndex="4" />
-        <Button fx:id="btn8" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn8Click" prefHeight="25.0" prefWidth="72.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <Button fx:id="btn9" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn9Click" prefHeight="25.0" prefWidth="72.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-        <Button fx:id="btn4" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn4Click" prefHeight="25.0" prefWidth="52.0" text="4" GridPane.rowIndex="5" />
-        <Button fx:id="btn5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn5Click" prefHeight="25.0" prefWidth="52.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Button fx:id="btn6" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn6Click" prefHeight="25.0" prefWidth="52.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-        <Button fx:id="plusBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plusBtnClicked" prefHeight="63.0" prefWidth="52.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-        <Button fx:id="btn1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn1Click" prefHeight="25.0" prefWidth="52.0" text="1" GridPane.rowIndex="6" />
-        <Button fx:id="btn2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn2Click" prefHeight="25.0" prefWidth="52.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-        <Button fx:id="btn3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn3Click" prefHeight="25.0" prefWidth="52.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-        <Button fx:id="equalsBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#equalsBtnClicked" prefHeight="62.0" prefWidth="52.0" text="=" GridPane.columnIndex="3" GridPane.rowIndex="6" GridPane.rowSpan="2" />
-        <Button fx:id="btn0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn0Click" prefHeight="25.0" prefWidth="116.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-        <Button fx:id="dotBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dotBtnClicked" prefHeight="25.0" prefWidth="52.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="7" />
-      <ListView fx:id="historyView" editable="true" prefHeight="182.0" prefWidth="339.0" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="6" />
-      <BorderPane prefHeight="0.0" prefWidth="303.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
-         <left>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<GridPane fx:id="background" hgap="4.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="4.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.DigitronController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane hgap="3.0" vgap="3.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="resultLabel" maxWidth="1.7976931348623157E308" GridPane.columnSpan="4" />
+            <Label fx:id="display" maxWidth="1.7976931348623157E308" text="0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="leftParenthesisBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leftParenthesisClick" prefHeight="54.0" prefWidth="69.0" text="(" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="rightParenthesisBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightParenthesisClick" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="backspaceBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backspaceClick" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="dividesBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dividesBtnClicked" text="/" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn7Click" text="7" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn8Click" text="8" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn9Click" text="9" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="timesBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#multipliesBtnClicked" text="⨯" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn4Click" text="4" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn5Click" text="5" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn6Click" text="6" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="plusBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plusBtnClicked" text="+" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="minusBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#minusBtnClicked" text="-" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn1Click" text="1" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="cBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cBtnClicked" text="C" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn0Click" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="dotBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#dotBtnClicked" text="." GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#equalsBtnClicked" text="=" GridPane.columnIndex="3" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn2Click" text="2" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn3Click" text="3" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+         <center>
+            <ListView fx:id="historyView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Label text="Omiljena operacija: " />
-                  <Label fx:id="omiljenaOperacijaLabel" text="Label" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Favourite operation: " />
+                        <Label fx:id="omiljenaOperacijaLabel" text="Label" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Total number of occurrences: " />
+                        <Label fx:id="brojPonavljanjaLabel" text="Label" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="Dark mode" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-         </left>
-         <right>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Broj ponavljanja: " />
-                  <Label fx:id="brojPonavljanjaLabel" text="Label" />
-               </children>
-            </HBox>
-         </right>
+            </GridPane>
+         </bottom>
       </BorderPane>
-      <Label fx:id="resultLabel" textFill="#858181" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leftParenthesisClick" prefHeight="25.0" prefWidth="71.0" text="(" GridPane.rowIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightParenthesisClick" prefHeight="25.0" prefWidth="73.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="backspaceBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backspaceClick" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-    </children>
-    <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-    </padding>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </GridPane>
