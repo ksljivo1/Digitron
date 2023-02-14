@@ -53,9 +53,7 @@ public class RegistracijaController {
             String poruka;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Registration failed");
-            if(neispravanUnos && duplikatUBazi)
-                poruka = "Username or password is not long enough and" +
-                        " account with entered username already exists!";
+            if(neispravanUnos && duplikatUBazi) poruka = "Username or password is not long enough and account with entered username already exists!";
             else if(!neispravanUnos) poruka = "Account with entered username already exists!";
             else poruka = "Username or password is not long enough!";
             alert.setContentText(poruka);

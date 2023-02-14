@@ -126,7 +126,7 @@ public class DigitronController {
                 long brPluseva = combined.map(s -> s.chars().filter(c -> c == '+')).orElseGet(IntStream::empty).count();
                 long brMinusa = combined.map(s -> s.chars().filter(c -> c == '-')).orElseGet(IntStream::empty).count();
                 long brDijeljenja = combined.map(s -> s.chars().filter(c -> c == '/')).orElseGet(IntStream::empty).count();
-                long brMnozenja = combined.map(s -> s.chars().filter(c -> c == '*')).orElseGet(IntStream::empty).count();
+                long brMnozenja = combined.map(s -> s.chars().filter(c -> c == '⨯')).orElseGet(IntStream::empty).count();
 
                 String operacija = "";
                 long max = 0;
@@ -140,7 +140,7 @@ public class DigitronController {
                 }
                 if(brMnozenja > max) {
                     max = brMnozenja;
-                    operacija = "*";
+                    operacija = "⨯";
                 }
                 if(brDijeljenja > max) {
                     max = brDijeljenja;
@@ -279,7 +279,7 @@ public class DigitronController {
 
     public void multipliesBtnClicked(ActionEvent actionEvent) {
         String tekst = display.getText().strip();
-        display.setText(tekst + " * ");
+        display.setText(tekst + " ⨯ ");
     }
 
     public void dividesBtnClicked(ActionEvent actionEvent) {
@@ -306,7 +306,8 @@ public class DigitronController {
             }
         };
         try {
-            DigitronParser digitronParser = new DigitronParser(expr);
+            String replace = expr.replaceAll("⨯", "*");
+            DigitronParser digitronParser = new DigitronParser(replace);
             double rez = Double.parseDouble(digitronParser.evaluate().peek().getValue()) + 0.0;
             resultLabel.setText(expr + " = ");
             display.setText(rez + "");
