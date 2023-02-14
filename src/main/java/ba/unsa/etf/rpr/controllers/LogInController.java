@@ -46,6 +46,8 @@ public class LogInController {
             Stage stage = new Stage();
             stage.setTitle("Digitron");
             stage.setScene(new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE));
+            stage.setMinWidth(600);
+            stage.setMinHeight(400);
             stage.show();
         }
     }
