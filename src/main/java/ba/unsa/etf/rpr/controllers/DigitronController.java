@@ -12,8 +12,9 @@ import ba.unsa.etf.rpr.models.RacunModel;
 import ba.unsa.etf.rpr.models.RacuniModel;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
-import javafx.animation.PauseTransition;
 import javafx.animation.Transition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,10 +22,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -39,6 +38,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -50,6 +50,13 @@ public class DigitronController {
     public Label resultLabel;
     public Button backspaceBtn;
     public GridPane background;
+    public RadioButton radioBtn;
+    public GridPane gridPane;
+    public HBox hBox1;
+    public HBox hbox2;
+    public GridPane gridPane2;
+    public VBox vBox;
+    public Button equalsBtn;
     private Korisnik korisnik;
     private RacunDaoSQLImpl racunDaoSQL;
     private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
@@ -161,11 +168,74 @@ public class DigitronController {
         omiljenaOperacijaModel = new OmiljenaOperacijaModel(omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId()));
         omiljenaOperacijaLabel.textProperty().bind(omiljenaOperacijaModel.operacijaProperty());
         brojPonavljanjaLabel.textProperty().bind(omiljenaOperacijaModel.brojPonavljanjaProperty().asString());
+
+        radioBtn.selectedProperty().addListener((observableValue, wasSelected, isSelected) -> {
+            if(isSelected) {
+                background.getStyleClass().removeAll("lightModeBackground");
+                background.getStyleClass().add("darkModeBackground");
+                hBox1.getChildren().forEach(node -> {
+                    if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
+                });
+                hbox2.getChildren().forEach(node -> {
+                    if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
+                });
+                vBox.getChildren().forEach(node -> {
+                    if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
+                });
+                ImageView image = new ImageView("slike/backspace_light.png");
+                image.setFitHeight(15);
+                image.setFitWidth(15);
+                image.setPreserveRatio(true);
+                backspaceBtn.setGraphic(image);
+
+                gridPane2.getChildren().forEach(node -> {
+                    if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
+                        node.getStyleClass().add("my-node");
+                        ((Button) node).setTextFill(Color.WHITE);
+
+                    }
+                });
+                radioBtn.setTextFill(Color.WHITE);
+            }
+            else {
+                background.getStyleClass().removeAll("darkModeBackground");
+                background.getStyleClass().add("lightModeBackground");
+                hBox1.getChildren().forEach(node -> {
+                    if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
+                });
+                hbox2.getChildren().forEach(node -> {
+                    if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
+                });
+                vBox.getChildren().forEach(node -> {
+                    if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
+                });
+                ImageView image = new ImageView("slike/backspace.png");
+                image.setFitHeight(15);
+                image.setFitWidth(15);
+                image.setPreserveRatio(true);
+                backspaceBtn.setGraphic(image);
+                gridPane2.getChildren().forEach(node -> {
+                    if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
+                        node.getStyleClass().removeAll("my-node");
+                        ((Button) node).setTextFill(Color.BLACK);
+
+                    }
+                });
+                radioBtn.setTextFill(Color.BLACK);
+            }
+        });
+    }
+
+    public void setNodeBackgroundColor(ObservableValue<Boolean> observableValue, boolean wasHovering, boolean isHovering, Node node) {
+        if (isHovering) {
+            node.setStyle("-fx-background-color: rgb(80, 80, 80);");
+        } else {
+            node.setStyle("-fx-background-color: rgb(48, 48, 48);");
+        }
     }
 
     @FXML
     public void initialize() {
-        background.getStyleClass().add("lightModeBackground");
         Label praznaHistorija = new Label("Calculation history is empty");
         praznaHistorija.setTextFill(Color.SLATEBLUE);
         historyView.setPlaceholder(praznaHistorija);
@@ -314,7 +384,7 @@ public class DigitronController {
             animation.play();
 
             Racun racun = new Racun();
-            racun.setRezultat(expr + " = " + rez);
+            racun.setRezultat(expr + " = " + rez + " ");
             racun.setIdKorisnik(korisnik.getId());
             LocalDateTime localDateTime = LocalDateTime.now();
             ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("UTC"));

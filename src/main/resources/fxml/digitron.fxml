@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +15,10 @@
 <?import javafx.scene.text.Font?>
 
 <GridPane fx:id="background" hgap="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="4.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.DigitronController">
-  <columnConstraints>
+    <stylesheets>
+        <URL value="@/css/digitron.css" />
+    </stylesheets>
+    <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -27,7 +31,7 @@
             <ListView fx:id="historyView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane fx:id="gridPane" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -37,13 +41,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="hBox1" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="Favourite operation: " />
                         <Label fx:id="omiljenaOperacijaLabel" text="Label" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <HBox fx:id="hbox2" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
                         <Label text="Total number of occurrences: " />
                         <Label fx:id="brojPonavljanjaLabel" text="Label" />
@@ -51,7 +55,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                        <RadioButton mnemonicParsing="false" text="Dark mode" />
+                        <RadioButton fx:id="radioBtn" mnemonicParsing="false" text="Dark mode" />
                      </children>
                   </HBox>
                </children>
@@ -60,7 +64,7 @@
       </BorderPane>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
-            <GridPane hgap="3.0" vgap="3.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="gridPane2" hgap="3.0" vgap="3.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -160,7 +164,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#equalsBtnClicked" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Button fx:id="equalsBtn" defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#equalsBtnClicked" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -182,7 +186,7 @@
             </GridPane>
          </center>
          <top>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <VBox fx:id="vBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="resultLabel" maxWidth="1.7976931348623157E308" />
                   <Label fx:id="display" maxWidth="1.7976931348623157E308" text="0">

@@ -1,3 +1,17 @@
 .lightModeBackground {
-    -fx-background-color: linear-gradient(to bottom right, rgb(250, 250, 250), rgb(225, 234, 238));
+    -fx-background-color: linear-gradient(to bottom right, darkgrey, white);
+}
+
+.darkModeBackground {
+    -fx-background-color: linear-gradient(to bottom right, black, rgb(40, 40, 43));
+}
+
+/* Normal state */
+.my-node {
+    -fx-background-color: rgb(48, 48, 48);
+}
+
+/* Hover state */
+.my-node:hover {
+    -fx-background-color: rgb(80, 80, 80);
 }
