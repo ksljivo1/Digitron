@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.RacunDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
@@ -59,6 +60,7 @@ public class DigitronController {
     public Button equalsBtn;
     private Korisnik korisnik;
     private RacunDaoSQLImpl racunDaoSQL;
+    private KorisnikDaoSQLImpl korisnikDaoSQL;
     private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
     private RacuniModel racuniModel = new RacuniModel();
     private OmiljenaOperacijaModel omiljenaOperacijaModel;
@@ -119,6 +121,7 @@ public class DigitronController {
     public DigitronController() {
         racunDaoSQL = new RacunDaoSQLImpl();
         omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
+        korisnikDaoSQL = new KorisnikDaoSQLImpl();
     }
     public void setKorisnik(Korisnik korisnik) throws DigitronException {
         this.korisnik = korisnik;
@@ -170,10 +173,20 @@ public class DigitronController {
         omiljenaOperacijaModel = new OmiljenaOperacijaModel(omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId()));
         omiljenaOperacijaLabel.textProperty().bind(omiljenaOperacijaModel.operacijaProperty());
         brojPonavljanjaLabel.textProperty().bind(omiljenaOperacijaModel.brojPonavljanjaProperty().asString());
-
+        if(korisnik.isMode()) lightMode();
+        else {
+            darkMode();
+            radioBtn.fire();
+        }
         radioBtn.selectedProperty().addListener((observableValue, wasSelected, isSelected) -> {
             if(isSelected) darkMode();
             else lightMode();
+            korisnik.setMode(!isSelected);
+            try {
+                korisnikDaoSQL.update(korisnik);
+            } catch (DigitronException e) {
+                e.printStackTrace();
+            }
         });
     }
 
