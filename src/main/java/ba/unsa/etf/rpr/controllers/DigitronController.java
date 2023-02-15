@@ -171,6 +171,7 @@ public class DigitronController {
 
         radioBtn.selectedProperty().addListener((observableValue, wasSelected, isSelected) -> {
             if(isSelected) {
+                historyView.getStylesheets().add("/css/historyview-black-mode.css");
                 background.getStyleClass().removeAll("lightModeBackground");
                 background.getStyleClass().add("darkModeBackground");
                 hBox1.getChildren().forEach(node -> {
@@ -198,6 +199,7 @@ public class DigitronController {
                 radioBtn.setTextFill(Color.WHITE);
             }
             else {
+                historyView.getStylesheets().removeAll("/css/historyview-black-mode.css");
                 background.getStyleClass().removeAll("darkModeBackground");
                 background.getStyleClass().add("lightModeBackground");
                 hBox1.getChildren().forEach(node -> {
@@ -218,7 +220,6 @@ public class DigitronController {
                     if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
                         node.getStyleClass().removeAll("my-node");
                         ((Button) node).setTextFill(Color.BLACK);
-
                     }
                 });
                 radioBtn.setTextFill(Color.BLACK);
