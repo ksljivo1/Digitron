@@ -172,61 +172,65 @@ public class DigitronController {
         brojPonavljanjaLabel.textProperty().bind(omiljenaOperacijaModel.brojPonavljanjaProperty().asString());
 
         radioBtn.selectedProperty().addListener((observableValue, wasSelected, isSelected) -> {
-            if(isSelected) {
-                historyView.getStylesheets().add("/css/historyview-black-mode.css");
-                background.getStyleClass().removeAll("lightModeBackground");
-                background.getStyleClass().add("darkModeBackground");
-                hBox1.getChildren().forEach(node -> {
-                    if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
-                });
-                hbox2.getChildren().forEach(node -> {
-                    if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
-                });
-                vBox.getChildren().forEach(node -> {
-                    if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
-                });
-                ImageView image = new ImageView("slike/backspace_light.png");
-                image.setFitHeight(15);
-                image.setFitWidth(15);
-                image.setPreserveRatio(true);
-                backspaceBtn.setGraphic(image);
+            if(isSelected) darkMode();
+            else lightMode();
+        });
+    }
 
-                gridPane2.getChildren().forEach(node -> {
-                    if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
-                        node.getStyleClass().add("my-node");
-                        ((Button) node).setTextFill(Color.WHITE);
-
-                    }
-                });
-                radioBtn.setTextFill(Color.WHITE);
-            }
-            else {
-                historyView.getStylesheets().removeAll("/css/historyview-black-mode.css");
-                background.getStyleClass().removeAll("darkModeBackground");
-                background.getStyleClass().add("lightModeBackground");
-                hBox1.getChildren().forEach(node -> {
-                    if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
-                });
-                hbox2.getChildren().forEach(node -> {
-                    if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
-                });
-                vBox.getChildren().forEach(node -> {
-                    if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
-                });
-                ImageView image = new ImageView("slike/backspace.png");
-                image.setFitHeight(15);
-                image.setFitWidth(15);
-                image.setPreserveRatio(true);
-                backspaceBtn.setGraphic(image);
-                gridPane2.getChildren().forEach(node -> {
-                    if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
-                        node.getStyleClass().removeAll("my-node");
-                        ((Button) node).setTextFill(Color.BLACK);
-                    }
-                });
-                radioBtn.setTextFill(Color.BLACK);
+    private void lightMode() {
+        historyView.getStylesheets().removeAll("/css/historyview-black-mode.css");
+        background.getStyleClass().removeAll("darkModeBackground");
+        background.getStyleClass().add("lightModeBackground");
+        hBox1.getChildren().forEach(node -> {
+            if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
+        });
+        hbox2.getChildren().forEach(node -> {
+            if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
+        });
+        vBox.getChildren().forEach(node -> {
+            if(node instanceof Label) ((Label) node).setTextFill(Color.BLACK);
+        });
+        ImageView image = new ImageView("slike/backspace.png");
+        image.setFitHeight(15);
+        image.setFitWidth(15);
+        image.setPreserveRatio(true);
+        backspaceBtn.setGraphic(image);
+        gridPane2.getChildren().forEach(node -> {
+            if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
+                node.getStyleClass().removeAll("my-node");
+                ((Button) node).setTextFill(Color.BLACK);
             }
         });
+        radioBtn.setTextFill(Color.BLACK);
+    }
+
+    private void darkMode() {
+        historyView.getStylesheets().add("/css/historyview-black-mode.css");
+        background.getStyleClass().removeAll("lightModeBackground");
+        background.getStyleClass().add("darkModeBackground");
+        hBox1.getChildren().forEach(node -> {
+            if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
+        });
+        hbox2.getChildren().forEach(node -> {
+            if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
+        });
+        vBox.getChildren().forEach(node -> {
+            if(node instanceof Label) ((Label) node).setTextFill(Color.WHITE);
+        });
+        ImageView image = new ImageView("slike/backspace_light.png");
+        image.setFitHeight(15);
+        image.setFitWidth(15);
+        image.setPreserveRatio(true);
+        backspaceBtn.setGraphic(image);
+
+        gridPane2.getChildren().forEach(node -> {
+            if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
+                node.getStyleClass().add("my-node");
+                ((Button) node).setTextFill(Color.WHITE);
+
+            }
+        });
+        radioBtn.setTextFill(Color.WHITE);
     }
 
     public void setNodeBackgroundColor(ObservableValue<Boolean> observableValue, boolean wasHovering, boolean isHovering, Node node) {
