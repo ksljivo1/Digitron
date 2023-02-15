@@ -11,10 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LogInController {
     public TextField textFld;
@@ -45,9 +48,47 @@ public class LogInController {
 
             Stage stage = new Stage();
             stage.setTitle("Digitron");
-            stage.setScene(new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE));
+            Scene scene = new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+            stage.setScene(scene);
             stage.setMinWidth(600);
             stage.setMinHeight(400);
+            List<KeyCode> keyCodes = new ArrayList<>();
+            scene.setOnKeyPressed(event -> {
+                KeyCode codeString = event.getCode();
+                keyCodes.add(codeString);
+                if(codeString.equals(KeyCode.ADD)) digitronController.plusBtnClicked();
+                else if(codeString.equals(KeyCode.SUBTRACT)) digitronController.minusBtnClicked();
+                else if(codeString.equals(KeyCode.MULTIPLY)) digitronController.multipliesBtnClicked();
+                else if(codeString.equals(KeyCode.DIVIDE)) digitronController.dividesBtnClicked();
+                else if(codeString.equals(KeyCode.NUMPAD0)) digitronController.btn0Click();
+                else if(codeString.equals(KeyCode.NUMPAD1)) digitronController.btn1Click();
+                else if(codeString.equals(KeyCode.NUMPAD2)) digitronController.btn2Click();
+                else if(codeString.equals(KeyCode.NUMPAD3)) digitronController.btn3Click();
+                else if(codeString.equals(KeyCode.NUMPAD4)) digitronController.btn4Click();
+                else if(codeString.equals(KeyCode.NUMPAD5)) digitronController.btn5Click();
+                else if(codeString.equals(KeyCode.NUMPAD6)) digitronController.btn6Click();
+                else if(codeString.equals(KeyCode.NUMPAD7)) digitronController.btn7Click();
+                else if(codeString.equals(KeyCode.NUMPAD8)) digitronController.btn8Click();
+                else if(codeString.equals(KeyCode.NUMPAD9)) digitronController.btn9Click();
+                else if(codeString.equals(KeyCode.C)) digitronController.cBtnClicked();
+                else if(codeString.equals(KeyCode.BACK_SPACE)) digitronController.backspaceClick();
+                else if(codeString.equals(KeyCode.DECIMAL)) digitronController.dotBtnClicked();
+                else if(codeString.equals(KeyCode.LEFT_PARENTHESIS) || (
+                        (keyCodes.size() >= 2 && keyCodes.get(keyCodes.size() - 1).equals(KeyCode.DIGIT9))
+                                && keyCodes.get(keyCodes.size() - 2).equals(KeyCode.SHIFT))) digitronController.leftParenthesisClick();
+                else if(codeString.equals(KeyCode.LEFT_PARENTHESIS) || (
+                        (keyCodes.size() >= 2 && keyCodes.get(keyCodes.size() - 1).equals(KeyCode.DIGIT0))
+                                && keyCodes.get(keyCodes.size() - 2).equals(KeyCode.SHIFT))) digitronController.rightParenthesisClick();
+                else if(codeString.equals(KeyCode.E)) {
+                    try {
+                        digitronController.equalsBtnClicked();
+                    } catch (DigitronException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else ;
+            });
+
             stage.show();
         }
     }

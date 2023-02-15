@@ -60,9 +60,6 @@ public class DigitronController {
     public VBox vBox;
     public Button equalsBtn;
     private Korisnik korisnik;
-    //private RacunDaoSQLImpl racunDaoSQL;
-    //private KorisnikDaoSQLImpl korisnikDaoSQL;
-    //private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
     private RacuniModel racuniModel = new RacuniModel();
     private OmiljenaOperacijaModel omiljenaOperacijaModel;
 
@@ -238,18 +235,9 @@ public class DigitronController {
             if(node instanceof Button && !node.getId().equals(equalsBtn.getId())) {
                 node.getStyleClass().add("my-node");
                 ((Button) node).setTextFill(Color.WHITE);
-
             }
         });
         radioBtn.setTextFill(Color.WHITE);
-    }
-
-    public void setNodeBackgroundColor(ObservableValue<Boolean> observableValue, boolean wasHovering, boolean isHovering, Node node) {
-        if (isHovering) {
-            node.setStyle("-fx-background-color: rgb(80, 80, 80);");
-        } else {
-            node.setStyle("-fx-background-color: rgb(48, 48, 48);");
-        }
     }
 
     @FXML
@@ -265,7 +253,7 @@ public class DigitronController {
         backspaceBtn.setGraphic(image);
     }
 
-    public void btn0Click(ActionEvent actionEvent) {
+    public void btn0Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("0");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -274,7 +262,7 @@ public class DigitronController {
         else display.setText(tekst + " 0");
     }
 
-    public void btn1Click(ActionEvent actionEvent) {
+    public void btn1Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("1");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -283,7 +271,7 @@ public class DigitronController {
         else display.setText(tekst + " 1");
     }
 
-    public void btn2Click(ActionEvent actionEvent) {
+    public void btn2Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("2");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -292,7 +280,7 @@ public class DigitronController {
         else display.setText(tekst + " 2");
     }
 
-    public void btn3Click(ActionEvent actionEvent) {
+    public void btn3Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("3");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -301,7 +289,7 @@ public class DigitronController {
         else display.setText(tekst + " 3");
     }
 
-    public void btn4Click(ActionEvent actionEvent) {
+    public void btn4Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("4");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -310,7 +298,7 @@ public class DigitronController {
         else display.setText(tekst + " 4");
     }
 
-    public void btn5Click(ActionEvent actionEvent) {
+    public void btn5Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("5");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -319,7 +307,7 @@ public class DigitronController {
         else display.setText(tekst + " 5");
     }
 
-    public void btn6Click(ActionEvent actionEvent) {
+    public void btn6Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("6");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -328,7 +316,7 @@ public class DigitronController {
         else display.setText(tekst + " 6");
     }
 
-    public void btn7Click(ActionEvent actionEvent) {
+    public void btn7Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("7");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -337,7 +325,7 @@ public class DigitronController {
         else display.setText(tekst + " 7");
     }
 
-    public void btn8Click(ActionEvent actionEvent) {
+    public void btn8Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("8");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) ||tekst.charAt(tekst.length() - 1) == '.')) {
@@ -346,7 +334,7 @@ public class DigitronController {
         else display.setText(tekst + " 8");
     }
 
-    public void btn9Click(ActionEvent actionEvent) {
+    public void btn9Click() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=") || tekst.contains("r")) display.setText("9");
         else if(!tekst.isEmpty() && (Character.isDigit(tekst.charAt(tekst.length() - 1)) || tekst.charAt(tekst.length() - 1) == '.')) {
@@ -355,32 +343,32 @@ public class DigitronController {
         else display.setText(tekst + " 9");
     }
 
-    public void dotBtnClicked(ActionEvent actionEvent) {
+    public void dotBtnClicked() {
         String tekst = display.getText();
         display.setText(tekst + ".");
     }
 
-    public void minusBtnClicked(ActionEvent actionEvent) {
+    public void minusBtnClicked() {
         String tekst = display.getText().strip();
         display.setText(tekst + " - ");
     }
 
-    public void multipliesBtnClicked(ActionEvent actionEvent) {
+    public void multipliesBtnClicked() {
         String tekst = display.getText().strip();
         display.setText(tekst + " ⨯ ");
     }
 
-    public void dividesBtnClicked(ActionEvent actionEvent) {
+    public void dividesBtnClicked() {
         String tekst = display.getText().strip();
         display.setText(tekst + " / ");
     }
 
-    public void plusBtnClicked(ActionEvent actionEvent) {
+    public void plusBtnClicked() {
         String tekst = display.getText().strip();
         display.setText(tekst + " + ");
     }
 
-    public void equalsBtnClicked(ActionEvent actionEvent) throws DigitronException {
+    public void equalsBtnClicked() throws DigitronException {
         String expr = display.getText();
         Animation animation = new Transition() {
             {
@@ -432,7 +420,7 @@ public class DigitronController {
         }
     }
 
-    public void leftParenthesisClick(ActionEvent actionEvent) {
+    public void leftParenthesisClick() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=")) display.setText("(");
         else {
@@ -440,7 +428,7 @@ public class DigitronController {
         }
     }
 
-    public void rightParenthesisClick(ActionEvent actionEvent) {
+    public void rightParenthesisClick() {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=")) display.setText(")");
         else {
@@ -448,7 +436,7 @@ public class DigitronController {
         }
     }
 
-    public void backspaceClick(ActionEvent actionEvent) {
+    public void backspaceClick() {
         String text = display.getText().strip();
         if(text.isEmpty()) return;
         int n = text.length() - 1;
@@ -458,7 +446,7 @@ public class DigitronController {
         display.setText(text);
     }
 
-    public void cBtnClicked(ActionEvent actionEvent) {
+    public void cBtnClicked() {
         display.setText("0");
     }
 }

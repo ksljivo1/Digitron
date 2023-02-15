@@ -30,7 +30,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             e.printStackTrace();
         }
         finally {
-            Runtime.getRuntime().addShutdownHook(new Thread() {
+            /*Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
                 public void run() {
                     try {
@@ -39,7 +39,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
                         e.printStackTrace();
                     }
                 }
-            });
+            });*/
         }
     }
 
