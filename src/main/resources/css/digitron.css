@@ -15,3 +15,8 @@
 .my-node:hover {
     -fx-background-color: rgb(80, 80, 80);
 }
+
+/* Pressed state */
+.my-node:pressed {
+    -fx-background-color: rgb(60, 60, 60);
+}
