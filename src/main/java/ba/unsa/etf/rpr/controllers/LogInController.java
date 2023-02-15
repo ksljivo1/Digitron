@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
@@ -29,8 +30,7 @@ public class LogInController {
     }
 
     public void onPrijaviSeBtnClicked(ActionEvent actionEvent) throws DigitronException, IOException {
-        KorisnikDaoSQLImpl korisnikDaoSQLImpl = new KorisnikDaoSQLImpl();
-        Korisnik korisnik = korisnikDaoSQLImpl.getKorisnikByUsername(textFld.getText());
+        Korisnik korisnik = DaoFactory.korisnikDao().getKorisnikByUsername(textFld.getText());
         if(korisnik == null || !korisnik.getPassword().equals(passwordFld.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");

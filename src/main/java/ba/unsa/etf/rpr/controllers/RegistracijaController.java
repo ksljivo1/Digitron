@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 public class RegistracijaController {
     public TextField textFld;
     public PasswordField passwordFld;
-    private KorisnikDaoSQLImpl korisnikDaoSQLImpl;
+    //private KorisnikDaoSQLImpl korisnikDaoSQLImpl;
     private boolean neispravanUnos = true;
     private boolean duplikatUBazi = false;
 
@@ -46,8 +47,7 @@ public class RegistracijaController {
     }
 
     public void onBtnClicked(ActionEvent actionEvent) throws DigitronException {
-        korisnikDaoSQLImpl = new KorisnikDaoSQLImpl();
-        duplikatUBazi = korisnikDaoSQLImpl.getKorisnikByUsername(textFld.getText()) != null;
+        duplikatUBazi = DaoFactory.korisnikDao().getKorisnikByUsername(textFld.getText()) != null;
         neispravanUnos = textFld.getText().strip().length() < 8 || passwordFld.getText().strip().length() < 8;
         if(neispravanUnos || duplikatUBazi) {
             String poruka;
@@ -64,7 +64,7 @@ public class RegistracijaController {
             korisnik.setMode(true);
             korisnik.setUsername(textFld.getText());
             korisnik.setPassword(passwordFld.getText());
-            korisnik = korisnikDaoSQLImpl.add(korisnik);
+            korisnik = DaoFactory.korisnikDao().add(korisnik);
 
             OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
             OmiljenaOperacija omiljenaOperacija = new OmiljenaOperacija();

@@ -10,8 +10,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class OmiljenaOperacijaDaoSQLImpl extends AbstractDao<OmiljenaOperacija> implements OmiljenaOperacijaDao {
+    private static OmiljenaOperacijaDaoSQLImpl instance = null;
+
     public OmiljenaOperacijaDaoSQLImpl() {
         super("Omiljena_Operacija");
+    }
+
+    public static OmiljenaOperacijaDaoSQLImpl getInstance() {
+        if(instance == null) instance = new OmiljenaOperacijaDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance() {
+        if(instance != null) instance = null;
     }
 
     @Override

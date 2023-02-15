@@ -13,12 +13,8 @@ k
 ;src/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDao.java,d\2\d23a5d83df80c7b7c8b2a05a63e446e66da05716
 _
 /src/main/java/ba/unsa/etf/rpr/domain/Racun.java,7\8\78a2fd6bbcf37a067d46a4491c0ac46ebe492424
-a
-1src/main/java/ba/unsa/etf/rpr/dao/DaoFactory.java,1\d\1d4d726c175f76400bdd70ae701a9db1546e2c4d
 o
 ?src/main/java/ba/unsa/etf/rpr/exceptions/DigitronException.java,4\a\4adaf822d914ddc0167ac58cd0651bc1ce98391b
-f
-6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
 Z
 *src/main/java/ba/unsa/etf/rpr/dao/Dao.java,a\1\a1348960998eebe088bc844c2afaaa6dd9d147f9
 e
@@ -27,12 +23,8 @@ d
 4src/main/java/ba/unsa/etf/rpr/models/RacunModel.java,9\1\9117bfdb2f6637d5d5b1da164e24b3503926d776
 p
 @src/main/java/ba/unsa/etf/rpr/models/OmiljenaOperacijaModel.java,4\a\4a258218b9e2d676aaf50ba1897175d04f23f04d
-i
-9src/main/java/ba/unsa/etf/rpr/dao/KorisnikDaoSQLImpl.java,2\0\20a483d269bd13b24bab2ec084e8c3ac5c0eab2f
 k
 ;src/main/java/ba/unsa/etf/rpr/domain/OmiljenaOperacija.java,9\b\9b01286b77b3242a9b0e5acfb814c524b872bd6c
-r
-Bsrc/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDaoSQLImpl.java,6\2\62688010e09a3a03391d0191145242f4eb4937ff
 d
 4src/main/java/ba/unsa/etf/rpr/evaluation/Tokens.java,b\7\b734f527e144024a7a30f582beaac36da4649d7f
 7

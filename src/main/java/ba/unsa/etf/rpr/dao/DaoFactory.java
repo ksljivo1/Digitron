@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.dao;
 
 public class DaoFactory {
-    private static final KorisnikDao korisnikDao = new KorisnikDaoSQLImpl();
-    private static final RacunDao racunDao = new RacunDaoSQLImpl();
-    private static final OmiljenaOperacijaDao omiljenaOperacijaDao = new OmiljenaOperacijaDaoSQLImpl();
+    private static final KorisnikDao korisnikDao = KorisnikDaoSQLImpl.getInstance();
+    private static final RacunDao racunDao = RacunDaoSQLImpl.getInstance();
+    private static final OmiljenaOperacijaDao omiljenaOperacijaDao = OmiljenaOperacijaDaoSQLImpl.getInstance();
 
     private DaoFactory() {}
 

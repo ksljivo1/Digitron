@@ -12,8 +12,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class RacunDaoSQLImpl extends AbstractDao<Racun> implements RacunDao {
+    private static RacunDaoSQLImpl instance = null;
+
     public RacunDaoSQLImpl() {
         super("Racun");
+    }
+
+    public static RacunDaoSQLImpl getInstance() {
+        if(instance == null) instance = new RacunDaoSQLImpl();
+        return instance;
+    }
+
+    public static void removeInstance() {
+        if(instance != null) instance = null;
     }
 
     @Override

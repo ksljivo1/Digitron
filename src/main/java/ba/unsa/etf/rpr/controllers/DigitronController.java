@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.RacunDaoSQLImpl;
@@ -59,9 +60,9 @@ public class DigitronController {
     public VBox vBox;
     public Button equalsBtn;
     private Korisnik korisnik;
-    private RacunDaoSQLImpl racunDaoSQL;
-    private KorisnikDaoSQLImpl korisnikDaoSQL;
-    private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
+    //private RacunDaoSQLImpl racunDaoSQL;
+    //private KorisnikDaoSQLImpl korisnikDaoSQL;
+    //private OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL;
     private RacuniModel racuniModel = new RacuniModel();
     private OmiljenaOperacijaModel omiljenaOperacijaModel;
 
@@ -93,7 +94,7 @@ public class DigitronController {
             button.setOnAction(event ->
             {
                 try {
-                    racunDaoSQL.delete(getItem().getId());
+                    DaoFactory.racunDao().delete(getItem().getId());
                 }
                 catch (DigitronException e) {
                     e.printStackTrace();
@@ -118,21 +119,18 @@ public class DigitronController {
         }
     }
 
-    public DigitronController() {
-        racunDaoSQL = new RacunDaoSQLImpl();
-        omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
-        korisnikDaoSQL = new KorisnikDaoSQLImpl();
-    }
+    public DigitronController() {}
+
     public void setKorisnik(Korisnik korisnik) throws DigitronException {
         this.korisnik = korisnik;
         historyView.setCellFactory(param -> new XCell());
-        ObservableList<RacunModel> racuni = FXCollections.observableArrayList(racunDaoSQL.getRacuniByKorisnikId(korisnik.getId())
+        ObservableList<RacunModel> racuni = FXCollections.observableArrayList(DaoFactory.racunDao().getRacuniByKorisnikId(korisnik.getId())
                 .stream().map(RacunModel::new).collect(Collectors.toList()));
         racuniModel.setRacuni(racuni);
         historyView.setItems(racuniModel.getRacuni());
         historyView.getItems().addListener((ListChangeListener<? super RacunModel>) observable -> {
             try {
-                List<String> results = racunDaoSQL.getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).collect(Collectors.toList());
+                List<String> results = DaoFactory.racunDao().getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).collect(Collectors.toList());
                 Optional<String> combined = results.stream().reduce(String::concat);
 
                 long brPluseva = combined.map(s -> s.chars().filter(c -> c == '+')).orElseGet(IntStream::empty).count();
@@ -162,15 +160,15 @@ public class DigitronController {
                 omiljenaOperacijaModel.setOperacija(operacija);
                 omiljenaOperacijaModel.setBrojPonavljanja((int) max);
 
-                OmiljenaOperacija update = omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId());
+                OmiljenaOperacija update = DaoFactory.omiljenaOperacijaDao().getOmiljenaOperacijaByKorisnikId(korisnik.getId());
                 update.setBrojPonavljanja((int) max);
                 update.setOperacija(operacija);
-                omiljenaOperacijaDaoSQL.update(update);
+                DaoFactory.omiljenaOperacijaDao().update(update);
             } catch (DigitronException e) {
                 e.printStackTrace();
             }
         });
-        omiljenaOperacijaModel = new OmiljenaOperacijaModel(omiljenaOperacijaDaoSQL.getOmiljenaOperacijaByKorisnikId(korisnik.getId()));
+        omiljenaOperacijaModel = new OmiljenaOperacijaModel(DaoFactory.omiljenaOperacijaDao().getOmiljenaOperacijaByKorisnikId(korisnik.getId()));
         omiljenaOperacijaLabel.textProperty().bind(omiljenaOperacijaModel.operacijaProperty());
         brojPonavljanjaLabel.textProperty().bind(omiljenaOperacijaModel.brojPonavljanjaProperty().asString());
         if(korisnik.isMode()) lightMode();
@@ -183,7 +181,7 @@ public class DigitronController {
             else lightMode();
             korisnik.setMode(!isSelected);
             try {
-                korisnikDaoSQL.update(korisnik);
+                DaoFactory.korisnikDao().update(korisnik);
             } catch (DigitronException e) {
                 e.printStackTrace();
             }
@@ -412,7 +410,7 @@ public class DigitronController {
             java.util.Date date = java.util.Date.from(instant);
             java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
             racun.setDatum(timestamp);
-            racun = racunDaoSQL.add(racun);
+            racun = DaoFactory.racunDao().add(racun);
             historyView.getItems().add(new RacunModel(racun));
         }
         catch(IOException ioException) {
