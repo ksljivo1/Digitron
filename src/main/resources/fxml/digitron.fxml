@@ -191,7 +191,7 @@
                   <Label fx:id="resultLabel" maxWidth="1.7976931348623157E308" />
                   <Label fx:id="display" maxWidth="1.7976931348623157E308" text="0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="30.0" />
                      </font>
                   </Label>
                </children>

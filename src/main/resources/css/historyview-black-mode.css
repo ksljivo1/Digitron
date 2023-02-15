@@ -6,6 +6,10 @@
     -fx-background-color: rgb(10, 10, 10);
 }
 
+.list-cell:selected {
+    -fx-background-color: lightblue;
+}
+
 .list-view .placeholder {
     -fx-background-color: rgb(10, 10, 10);
 }

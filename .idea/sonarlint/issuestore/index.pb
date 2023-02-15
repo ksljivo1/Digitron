@@ -17,8 +17,6 @@ a
 1src/main/java/ba/unsa/etf/rpr/dao/DaoFactory.java,1\d\1d4d726c175f76400bdd70ae701a9db1546e2c4d
 o
 ?src/main/java/ba/unsa/etf/rpr/exceptions/DigitronException.java,4\a\4adaf822d914ddc0167ac58cd0651bc1ce98391b
-b
-2src/main/java/ba/unsa/etf/rpr/dao/AbstractDao.java,5\7\57507653d3cc2897e4c1a2a493815c4dfcd600c7
 f
 6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
 Z

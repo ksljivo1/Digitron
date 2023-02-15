@@ -4,10 +4,7 @@ import ba.unsa.etf.rpr.domain.Idable;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 
 import java.sql.*;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     private Connection connection;
@@ -16,9 +13,12 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     public AbstractDao(String tableName) {
         try {
             this.tableName = tableName;
-            String url = "jdbc:mysql://sql.freedb.tech/freedb_DigitronBaza?serverTimezone=UTC";
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connection = DriverManager.getConnection(url, "freedb_ksljivo1", "Kp63vUJwc4*vN$C");
+            Properties p = new Properties();
+            p.load(ClassLoader.getSystemResource("application.properties").openStream());
+            String url = p.getProperty("db.connection_string");
+            String username = p.getProperty("db.username");
+            String password = p.getProperty("db.password");
+            this.connection = DriverManager.getConnection(url, username, password);
         }
         catch(Exception e) {
             System.out.println("Nemoguce uspostaviti konekciju na bazu");
