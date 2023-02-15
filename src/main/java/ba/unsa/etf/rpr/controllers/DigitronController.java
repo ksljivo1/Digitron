@@ -71,6 +71,8 @@ public class DigitronController {
 
         public XCell() {
             super();
+            rezultat.setId("rezultat");
+            datum.setId("datum");
             ImageView image = new ImageView("slike/kanta.png");
             image.setFitHeight(15);
             image.setFitWidth(15);
