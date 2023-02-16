@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.ParallelCount;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
@@ -130,10 +131,29 @@ public class DigitronController {
                 List<String> results = DaoFactory.racunDao().getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).collect(Collectors.toList());
                 Optional<String> combined = results.stream().reduce(String::concat);
 
-                long brPluseva = combined.map(s -> s.chars().filter(c -> c == '+')).orElseGet(IntStream::empty).count();
-                long brMinusa = combined.map(s -> s.chars().filter(c -> c == '-')).orElseGet(IntStream::empty).count();
-                long brDijeljenja = combined.map(s -> s.chars().filter(c -> c == '/')).orElseGet(IntStream::empty).count();
-                long brMnozenja = combined.map(s -> s.chars().filter(c -> c == '⨯')).orElseGet(IntStream::empty).count();
+                ParallelCount searchPlus = new ParallelCount('+', combined);
+                ParallelCount searchMinus = new ParallelCount('-', combined);
+                ParallelCount searchMultiply = new ParallelCount('⨯', combined);
+                ParallelCount searchDivide = new ParallelCount('/', combined);
+
+                searchPlus.start();
+                searchMinus.start();
+                searchMultiply.start();
+                searchDivide.start();
+
+                try {
+                    searchPlus.join();
+                    searchMinus.join();
+                    searchMultiply.join();
+                    searchDivide.join();
+                } catch (InterruptedException ignored) {
+
+                }
+
+                long brPluseva = searchPlus.getBroj();
+                long brMinusa = searchMinus.getBroj();
+                long brMnozenja = searchMultiply.getBroj();
+                long brDijeljenja = searchDivide.getBroj();
 
                 String operacija = "";
                 long max = 0;

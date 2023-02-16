@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -52,6 +54,7 @@ public class LogInController {
             stage.setScene(scene);
             stage.setMinWidth(600);
             stage.setMinHeight(400);
+
             List<KeyCode> keyCodes = new ArrayList<>();
             scene.setOnKeyPressed(event -> {
                 KeyCode codeString = event.getCode();
