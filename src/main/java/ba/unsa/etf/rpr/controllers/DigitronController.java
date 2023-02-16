@@ -128,7 +128,11 @@ public class DigitronController {
         historyView.setItems(racuniModel.getRacuni());
         historyView.getItems().addListener((ListChangeListener<? super RacunModel>) observable -> {
             try {
-                List<String> results = DaoFactory.racunDao().getRacuniByKorisnikId(korisnik.getId()).stream().map(Racun::getRezultat).collect(Collectors.toList());
+                List<String> results = DaoFactory.racunDao().
+                        getRacuniByKorisnikId(korisnik.getId()).stream().map(racun -> {
+                            String str = racun.getRezultat();
+                            return str.substring(0, str.indexOf('='));
+                        }).collect(Collectors.toList());
                 Optional<String> combined = results.stream().reduce(String::concat);
 
                 ParallelCount searchPlus = new ParallelCount('+', combined);
