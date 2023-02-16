@@ -33,3 +33,15 @@ d
 .src/main/java/ba/unsa/etf/rpr/DigitronApp.java,d\8\d8e6f8ca64c2086b2a1333b69b30bb7b4906f0e3
 l
 <src/main/java/ba/unsa/etf/rpr/evaluation/DigitronParser.java,d\1\d14f7efc98b4fa3a726d59c2e3de225bf7594f4b
+[
++src/main/java/ba/unsa/etf/rpr/Digitron.java,c\5\c51186e09b23d044f27772d77f8c2f671e456979
+a
+1src/main/java/ba/unsa/etf/rpr/dao/DaoFactory.java,1\d\1d4d726c175f76400bdd70ae701a9db1546e2c4d
+i
+9src/main/java/ba/unsa/etf/rpr/dao/KorisnikDaoSQLImpl.java,2\0\20a483d269bd13b24bab2ec084e8c3ac5c0eab2f
+r
+Bsrc/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDaoSQLImpl.java,6\2\62688010e09a3a03391d0191145242f4eb4937ff
+f
+6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
+k
+;src/main/java/ba/unsa/etf/rpr/evaluation/DigitronLexer.java,2\1\2106a2d5ed7636551a5ad9634071ba2f96e0ab31
