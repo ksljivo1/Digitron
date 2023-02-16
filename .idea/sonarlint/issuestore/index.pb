@@ -29,8 +29,6 @@ d
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 ^
 .src/main/java/ba/unsa/etf/rpr/DigitronApp.java,d\8\d8e6f8ca64c2086b2a1333b69b30bb7b4906f0e3
-l
-<src/main/java/ba/unsa/etf/rpr/evaluation/DigitronParser.java,d\1\d14f7efc98b4fa3a726d59c2e3de225bf7594f4b
 [
 +src/main/java/ba/unsa/etf/rpr/Digitron.java,c\5\c51186e09b23d044f27772d77f8c2f671e456979
 a

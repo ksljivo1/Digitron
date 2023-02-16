@@ -63,13 +63,8 @@ public class DigitronParser {
             else if(numberTokens.size() >= 2 && !operationTokens.empty() && hasHigherPrecedence(operationTokens.peek())) {
                 Pair<Tokens, String> op2Token = numberTokens.pop();
                 Pair<Tokens, String> op1Token = numberTokens.pop();
-                if(isLPARENTHESISToken(op2Token) || isLPARENTHESISToken(op1Token)) {
-                    numberTokens.push(op1Token);
-                    numberTokens.push(op2Token);
-                    if(isOperationToken(current)) operationTokens.push(current);
-                    else if(isNumberToken(current) || isLPARENTHESISToken(current)) numberTokens.push(current);
-                    else ;
-                }
+                if(isInsideParentheses(isLPARENTHESISToken(op2Token), isLPARENTHESISToken(op1Token)))
+                    postponeEvaluation(numberTokens, operationTokens, current, op2Token, op1Token);
                 else {
                     double op2 = Double.parseDouble(op2Token.getValue());
                     double op1 = Double.parseDouble(op1Token.getValue());
@@ -93,13 +88,8 @@ public class DigitronParser {
                 else {
                     Pair<Tokens, String> op2Token = numberTokens.pop();
                     Pair<Tokens, String> op1Token = numberTokens.pop();
-                    if(isLPARENTHESISToken(op2Token) || isLPARENTHESISToken(op1Token)) {
-                        numberTokens.push(op1Token);
-                        numberTokens.push(op2Token);
-                        if(isOperationToken(current)) operationTokens.push(current);
-                        else if(isNumberToken(current) || isLPARENTHESISToken(current)) numberTokens.push(current);
-                        else ;
-                    }
+                    if(isInsideParentheses(isLPARENTHESISToken(op2Token), isLPARENTHESISToken(op1Token)))
+                        postponeEvaluation(numberTokens, operationTokens, current, op2Token, op1Token);
                     else {
                         double op2 = Double.parseDouble(op2Token.getValue());
                         double op1 = Double.parseDouble(op1Token.getValue());
@@ -115,6 +105,18 @@ public class DigitronParser {
             else;
             i++;
         }
+    }
+
+    private static void postponeEvaluation(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, Pair<Tokens, String> current, Pair<Tokens, String> op2Token, Pair<Tokens, String> op1Token) {
+        numberTokens.push(op1Token);
+        numberTokens.push(op2Token);
+        if (isOperationToken(current)) operationTokens.push(current);
+        else if (isNumberToken(current) || isLPARENTHESISToken(current)) numberTokens.push(current);
+        else ;
+    }
+
+    private static boolean isInsideParentheses(boolean lparenthesisToken, boolean lparenthesisToken2) {
+        return lparenthesisToken || lparenthesisToken2;
     }
 
     private static boolean isNumberToken(Pair<Tokens, String> token) {
