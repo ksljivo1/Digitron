@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.business.KorisnikManager;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
@@ -16,18 +17,19 @@ public class RegistracijaController {
     public static final String POLJE_NIJE_ISPRAVNO = "poljeNijeIspravno";
     public TextField textFld;
     public PasswordField passwordFld;
-    private boolean neispravanUnos = true;
-    private boolean duplikatUBazi = false;
+    private KorisnikManager korisnikManager = new KorisnikManager();
 
     @FXML
     public void initialize() {
         textFld.textProperty().addListener((observableValue, o, n) -> {
-            if(n.strip().length() < 8) updateStyle(textFld, POLJE_JE_ISPRAVNO, POLJE_NIJE_ISPRAVNO);
+            int length = n.strip().length();
+            if(length < 8 || length > 255) updateStyle(textFld, POLJE_JE_ISPRAVNO, POLJE_NIJE_ISPRAVNO);
             else updateStyle(textFld, POLJE_NIJE_ISPRAVNO, POLJE_JE_ISPRAVNO);
 
         });
         passwordFld.textProperty().addListener((observableValue, o, n) -> {
-                if(n.strip().length() < 8) updateStyle(passwordFld, POLJE_JE_ISPRAVNO, POLJE_NIJE_ISPRAVNO);
+            int length = n.strip().length();
+                if(length < 8 || length > 255) updateStyle(passwordFld, POLJE_JE_ISPRAVNO, POLJE_NIJE_ISPRAVNO);
                 else updateStyle(passwordFld, POLJE_NIJE_ISPRAVNO, POLJE_JE_ISPRAVNO);
             }
         );
@@ -39,24 +41,12 @@ public class RegistracijaController {
     }
 
     public void onBtnClicked(ActionEvent actionEvent) throws DigitronException {
-        duplikatUBazi = DaoFactory.korisnikDao().getKorisnikByUsername(textFld.getText()) != null;
-        neispravanUnos = textFld.getText().strip().length() < 8 || passwordFld.getText().strip().length() < 8;
-        if(neispravanUnos || duplikatUBazi) {
-            String poruka;
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Registration failed");
-            if(neispravanUnos && duplikatUBazi) poruka = "Username or password is not long enough and account with entered username already exists!";
-            else if(!neispravanUnos) poruka = "Account with entered username already exists!";
-            else poruka = "Username or password is not long enough!";
-            alert.setContentText(poruka);
-            alert.showAndWait();
-        }
-        else {
+        try {
             Korisnik korisnik = new Korisnik();
             korisnik.setMode(true);
-            korisnik.setUsername(textFld.getText());
-            korisnik.setPassword(passwordFld.getText());
-            korisnik = DaoFactory.korisnikDao().add(korisnik);
+            korisnik.setUsername(textFld.getText().strip());
+            korisnik.setPassword(passwordFld.getText().strip());
+            korisnik = korisnikManager.add(korisnik);
 
             OmiljenaOperacijaDaoSQLImpl omiljenaOperacijaDaoSQL = new OmiljenaOperacijaDaoSQLImpl();
             OmiljenaOperacija omiljenaOperacija = new OmiljenaOperacija();
@@ -71,6 +61,11 @@ public class RegistracijaController {
             alert.showAndWait();
             Stage stage = (Stage) textFld.getScene().getWindow();
             stage.close();
+        }
+        catch(DigitronException digitronException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(digitronException.getMessage());
+            alert.showAndWait();
         }
     }
 
