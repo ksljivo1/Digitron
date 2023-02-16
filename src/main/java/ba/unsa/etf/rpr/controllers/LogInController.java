@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.business.KorisnikManager;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
@@ -25,6 +26,7 @@ import java.util.List;
 public class LogInController {
     public TextField textFld;
     public PasswordField passwordFld;
+    private KorisnikManager korisnikManager = new KorisnikManager();
 
     public void onBtnKreirajNoviClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/registracija.fxml"));
@@ -37,7 +39,7 @@ public class LogInController {
 
     public void onPrijaviSeBtnClicked(ActionEvent actionEvent) throws DigitronException, IOException {
         Korisnik korisnik = DaoFactory.korisnikDao().getKorisnikByUsername(textFld.getText());
-        if(korisnik == null || !korisnik.getPassword().equals(passwordFld.getText())) {
+        if(!korisnikManager.comparePasswords(korisnik, passwordFld.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");
             alert.setContentText("Username or password is wrong!");
