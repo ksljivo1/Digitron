@@ -23,14 +23,9 @@ public class DigitronLexer {
             else if(current == '/') tokens.add(new Pair<>(Tokens.DIVIDE, "/"));
             else if(current == '(') {
                 // podrska za unarni minus
-                if((tokens.size() >= 2 && tokens.get(tokens.size() - 1).getValue().equals("-") && tokens.get(tokens.size() - 2).getValue().equals("(")) ||
-                        (tokens.size() == 1 && tokens.get(0).getValue().equals("-"))) {
+                if(isUnaryMinus()) {
                     tokens.remove(tokens.size() - 1);
-                    tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
-                    tokens.add(new Pair<>(Tokens.DOUBLE, "0"));
-                    tokens.add(new Pair<>(Tokens.MINUS, "-"));
-                    tokens.add(new Pair<>(Tokens.DOUBLE, "1"));
-                    tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
+                    modifyUnary("1");
                     tokens.add(new Pair<>(Tokens.MULTIPLY, "*"));
                 }
                 tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
@@ -54,15 +49,10 @@ public class DigitronLexer {
                 catch(NumberFormatException numberFormatException) {
                     throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
                 }
-                // podrska za unarni minus
-                if((tokens.size() >= 2 && tokens.get(tokens.size() - 1).getValue().equals("-") && tokens.get(tokens.size() - 2).getValue().equals("(")) ||
-                        (tokens.size() == 1 && tokens.get(0).getValue().equals("-"))) {
+
+                if(isUnaryMinus()) {
                     tokens.remove(tokens.size() - 1);
-                    tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
-                    tokens.add(new Pair<>(Tokens.DOUBLE, "0"));
-                    tokens.add(new Pair<>(Tokens.MINUS, "-"));
-                    tokens.add(new Pair<>(Tokens.DOUBLE, str));
-                    tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
+                    modifyUnary(str);
                 }
                 else tokens.add(new Pair<>(Tokens.DOUBLE, str));
                 poz = poz1 - 1;
@@ -72,6 +62,19 @@ public class DigitronLexer {
             poz = poz + 1;
         }
         tokens.add(new Pair<>(Tokens.EOF, "EOF"));
+    }
+
+    private void modifyUnary(String s) {
+        tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
+        tokens.add(new Pair<>(Tokens.DOUBLE, "0"));
+        tokens.add(new Pair<>(Tokens.MINUS, "-"));
+        tokens.add(new Pair<>(Tokens.DOUBLE, s));
+        tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
+    }
+
+    private boolean isUnaryMinus() {
+        return (tokens.size() >= 2 && tokens.get(tokens.size() - 1).getValue().equals("-") && tokens.get(tokens.size() - 2).getValue().equals("(")) ||
+                (tokens.size() == 1 && tokens.get(0).getValue().equals("-"));
     }
 
     public List<Pair<Tokens, String>>  getTokens() {

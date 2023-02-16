@@ -13,8 +13,6 @@ k
 ;src/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDao.java,d\2\d23a5d83df80c7b7c8b2a05a63e446e66da05716
 _
 /src/main/java/ba/unsa/etf/rpr/domain/Racun.java,7\8\78a2fd6bbcf37a067d46a4491c0ac46ebe492424
-o
-?src/main/java/ba/unsa/etf/rpr/exceptions/DigitronException.java,4\a\4adaf822d914ddc0167ac58cd0651bc1ce98391b
 Z
 *src/main/java/ba/unsa/etf/rpr/dao/Dao.java,a\1\a1348960998eebe088bc844c2afaaa6dd9d147f9
 e
@@ -43,5 +41,3 @@ r
 Bsrc/main/java/ba/unsa/etf/rpr/dao/OmiljenaOperacijaDaoSQLImpl.java,6\2\62688010e09a3a03391d0191145242f4eb4937ff
 f
 6src/main/java/ba/unsa/etf/rpr/dao/RacunDaoSQLImpl.java,e\e\ee5dae7d06b9ad3f62cdebec82c295061068b72c
-k
-;src/main/java/ba/unsa/etf/rpr/evaluation/DigitronLexer.java,2\1\2106a2d5ed7636551a5ad9634071ba2f96e0ab31
