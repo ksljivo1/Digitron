@@ -1,13 +1,10 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.dao.DaoFactory;
-import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
 import ba.unsa.etf.rpr.domain.OmiljenaOperacija;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,35 +12,30 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class RegistracijaController {
+    public static final String POLJE_JE_ISPRAVNO = "poljeJeIspravno";
+    public static final String POLJE_NIJE_ISPRAVNO = "poljeNijeIspravno";
     public TextField textFld;
     public PasswordField passwordFld;
-    //private KorisnikDaoSQLImpl korisnikDaoSQLImpl;
     private boolean neispravanUnos = true;
     private boolean duplikatUBazi = false;
 
     @FXML
     public void initialize() {
         textFld.textProperty().addListener((observableValue, o, n) -> {
-            if(n.strip().length() < 8) {
-                textFld.getStyleClass().removeAll("poljeJeIspravno");
-                textFld.getStyleClass().add("poljeNijeIspravno");
-            }
-            else {
-                textFld.getStyleClass().removeAll("poljeNijeIspravno");
-                textFld.getStyleClass().add("poljeJeIspravno");
-            }
+            if(n.strip().length() < 8) updateStyle(textFld, POLJE_JE_ISPRAVNO, POLJE_NIJE_ISPRAVNO);
+            else updateStyle(textFld, POLJE_NIJE_ISPRAVNO, POLJE_JE_ISPRAVNO);
+
         });
         passwordFld.textProperty().addListener((observableValue, o, n) -> {
-                if(n.strip().length() < 8) {
-                    passwordFld.getStyleClass().removeAll("poljeJeIspravno");
-                    passwordFld.getStyleClass().add("poljeNijeIspravno");
-                }
-                else {
-                    passwordFld.getStyleClass().removeAll("poljeNijeIspravno");
-                    passwordFld.getStyleClass().add("poljeJeIspravno");
-                }
+                if(n.strip().length() < 8) updateStyle(passwordFld, POLJE_JE_ISPRAVNO, POLJE_NIJE_ISPRAVNO);
+                else updateStyle(passwordFld, POLJE_NIJE_ISPRAVNO, POLJE_JE_ISPRAVNO);
             }
         );
+    }
+
+    private void updateStyle(TextField textFld, String remove, String add) {
+        textFld.getStyleClass().removeAll(remove);
+        textFld.getStyleClass().add(add);
     }
 
     public void onBtnClicked(ActionEvent actionEvent) throws DigitronException {
