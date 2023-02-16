@@ -2,9 +2,7 @@ package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.ParallelCount;
 import ba.unsa.etf.rpr.dao.DaoFactory;
-import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
-import ba.unsa.etf.rpr.dao.OmiljenaOperacijaDaoSQLImpl;
-import ba.unsa.etf.rpr.dao.RacunDaoSQLImpl;
+import ba.unsa.etf.rpr.dao.RacunDao;
 import ba.unsa.etf.rpr.domain.Korisnik;
 import ba.unsa.etf.rpr.domain.OmiljenaOperacija;
 import ba.unsa.etf.rpr.domain.Racun;
@@ -16,8 +14,6 @@ import ba.unsa.etf.rpr.models.RacuniModel;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -25,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -41,11 +36,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class DigitronController {
+    private final RacunDao racunDao = DaoFactory.racunDao();
     public Label display;
     public ListView historyView;
     public Label omiljenaOperacijaLabel;
@@ -74,25 +68,31 @@ public class DigitronController {
             super();
             rezultat.setId("rezultat");
             datum.setId("datum");
+
             ImageView image = new ImageView("slike/kanta.png");
             image.setFitHeight(15);
             image.setFitWidth(15);
             image.setPreserveRatio(true);
             button.setGraphic(image);
+
             gridPane.add(rezultat, 0, 0);
+
             datum.setFont(Font.font(10));
             datum.setTextFill(Color.LIGHTSLATEGRAY);
+
             gridPane.add(datum, 0, 1);
             gridPane.add(button, 1, 0, 1, 2);
+
             ColumnConstraints leftCol = new ColumnConstraints();
             ColumnConstraints rightCol = new ColumnConstraints();
             rightCol.setHalignment(HPos.RIGHT);
             rightCol.setHgrow(Priority.ALWAYS);
             gridPane.getColumnConstraints().addAll(leftCol, rightCol);
+
             button.setOnAction(event ->
             {
                 try {
-                    DaoFactory.racunDao().delete(getItem().getId());
+                    racunDao.delete(getItem().getId());
                 }
                 catch (DigitronException e) {
                     e.printStackTrace();
@@ -122,13 +122,13 @@ public class DigitronController {
     public void setKorisnik(Korisnik korisnik) throws DigitronException {
         this.korisnik = korisnik;
         historyView.setCellFactory(param -> new XCell());
-        ObservableList<RacunModel> racuni = FXCollections.observableArrayList(DaoFactory.racunDao().getRacuniByKorisnikId(korisnik.getId())
+        ObservableList<RacunModel> racuni = FXCollections.observableArrayList(racunDao.getRacuniByKorisnikId(korisnik.getId())
                 .stream().map(RacunModel::new).collect(Collectors.toList()));
         racuniModel.setRacuni(racuni);
         historyView.setItems(racuniModel.getRacuni());
         historyView.getItems().addListener((ListChangeListener<? super RacunModel>) observable -> {
             try {
-                List<String> results = DaoFactory.racunDao().
+                List<String> results = racunDao.
                         getRacuniByKorisnikId(korisnik.getId()).stream().map(racun -> {
                             String str = racun.getRezultat();
                             return str.substring(0, str.indexOf('='));
@@ -344,7 +344,7 @@ public class DigitronController {
             java.util.Date date = java.util.Date.from(instant);
             java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
             racun.setDatum(timestamp);
-            racun = DaoFactory.racunDao().add(racun);
+            racun = racunDao.add(racun);
             historyView.getItems().add(new RacunModel(racun));
         }
         catch(IOException ioException) {
