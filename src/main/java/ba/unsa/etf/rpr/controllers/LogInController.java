@@ -2,7 +2,6 @@ package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.KorisnikManager;
 import ba.unsa.etf.rpr.dao.DaoFactory;
-import ba.unsa.etf.rpr.dao.KorisnikDaoSQLImpl;
 import ba.unsa.etf.rpr.domain.Korisnik;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 import javafx.event.ActionEvent;
@@ -10,12 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
@@ -66,16 +64,10 @@ public class LogInController {
                 else if(codeString.equals(KeyCode.SUBTRACT)) digitronController.minusBtnClicked();
                 else if(codeString.equals(KeyCode.MULTIPLY)) digitronController.multipliesBtnClicked();
                 else if(codeString.equals(KeyCode.DIVIDE)) digitronController.dividesBtnClicked();
-                else if(codeString.equals(KeyCode.NUMPAD0)) digitronController.btn0Click();
-                else if(codeString.equals(KeyCode.NUMPAD1)) digitronController.btn1Click();
-                else if(codeString.equals(KeyCode.NUMPAD2)) digitronController.btn2Click();
-                else if(codeString.equals(KeyCode.NUMPAD3)) digitronController.btn3Click();
-                else if(codeString.equals(KeyCode.NUMPAD4)) digitronController.btn4Click();
-                else if(codeString.equals(KeyCode.NUMPAD5)) digitronController.btn5Click();
-                else if(codeString.equals(KeyCode.NUMPAD6)) digitronController.btn6Click();
-                else if(codeString.equals(KeyCode.NUMPAD7)) digitronController.btn7Click();
-                else if(codeString.equals(KeyCode.NUMPAD8)) digitronController.btn8Click();
-                else if(codeString.equals(KeyCode.NUMPAD9)) digitronController.btn9Click();
+                else if(codeString.isKeypadKey()) {
+                    Button button = (Button) scene.lookup("#btn" + codeString.toString().charAt(codeString.toString().length() - 1));
+                    button.fire();
+                }
                 else if(codeString.equals(KeyCode.C)) digitronController.cBtnClicked();
                 else if(codeString.equals(KeyCode.BACK_SPACE)) digitronController.backspaceClick();
                 else if(codeString.equals(KeyCode.DECIMAL)) digitronController.dotBtnClicked();
