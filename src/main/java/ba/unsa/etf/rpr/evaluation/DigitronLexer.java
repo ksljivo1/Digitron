@@ -24,15 +24,14 @@ public class DigitronLexer {
             else if(current == '(') {
                 // podrska za unarni minus
                 if(isUnaryMinus()) {
-                    tokens.remove(tokens.size() - 1);
                     modifyUnary("1");
                     tokens.add(new Pair<>(Tokens.MULTIPLY, "*"));
                 }
                 tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
             }
             else if(current == ')') {
-                if(tokens.size() != 0 && tokens.get(tokens.size() - 1).getValue().equals("("))
-                    throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
+                if(!tokens.isEmpty() && tokens.get(tokens.size() - 1).getValue().equals("("))
+                    throw new IOException(getExceptionMessage(poz, current));
                 tokens.add(new Pair<>(Tokens.RPARENTHESIS, ")"));
             }
             else if(Character.isDigit(current)) {
@@ -47,24 +46,26 @@ public class DigitronLexer {
                     Double.parseDouble(str);
                 }
                 catch(NumberFormatException numberFormatException) {
-                    throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
+                    throw new IOException(getExceptionMessage(poz, current));
                 }
 
-                if(isUnaryMinus()) {
-                    tokens.remove(tokens.size() - 1);
-                    modifyUnary(str);
-                }
+                if(isUnaryMinus()) modifyUnary(str);
                 else tokens.add(new Pair<>(Tokens.DOUBLE, str));
                 poz = poz1 - 1;
             }
             else if(Character.isWhitespace(current)) ;
-            else throw new IOException("Expected a valid token at position: " + (poz + 1) + ", instead received: " + current);
+            else throw new IOException(getExceptionMessage(poz, current));
             poz = poz + 1;
         }
         tokens.add(new Pair<>(Tokens.EOF, "EOF"));
     }
 
+    private String getExceptionMessage(int poz, char current) {
+        return "Expected a valid token at position: " + (poz + 1) + ", instead received: " + current;
+    }
+
     private void modifyUnary(String s) {
+        tokens.remove(tokens.size() - 1);
         tokens.add(new Pair<>(Tokens.LPARENTHESIS, "("));
         tokens.add(new Pair<>(Tokens.DOUBLE, "0"));
         tokens.add(new Pair<>(Tokens.MINUS, "-"));
@@ -77,7 +78,7 @@ public class DigitronLexer {
                 (tokens.size() == 1 && tokens.get(0).getValue().equals("-"));
     }
 
-    public List<Pair<Tokens, String>>  getTokens() {
+    public List<Pair<Tokens, String>> getTokens() {
         return tokens;
     }
 }
