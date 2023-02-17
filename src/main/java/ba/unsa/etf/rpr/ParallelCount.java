@@ -3,6 +3,12 @@ package ba.unsa.etf.rpr;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+/**
+ * Helper class to enable parallel counting of operations in saved results
+ *
+ * @author ksljivo1
+ */
+
 public class ParallelCount extends Thread {
     private char search;
     private Optional<String> combined;

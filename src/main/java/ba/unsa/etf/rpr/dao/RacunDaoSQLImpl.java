@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * MySQL implementation of the DAO
+ * @author ksljivo1
+ */
+
 public class RacunDaoSQLImpl extends AbstractDao<Racun> implements RacunDao {
     private static RacunDaoSQLImpl instance = null;
 

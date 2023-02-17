@@ -7,6 +7,12 @@ import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Parser of calculator input expressions
+ *
+ * @author ksljivo1
+ */
+
 public class DigitronParser {
     List<Pair<Tokens, String>> tokens;
 
@@ -40,12 +46,22 @@ public class DigitronParser {
         return numberTokens;
     }
 
+    /**
+     * modified Dijkstra's two-stack algorithm
+     *
+     * @param numberTokens
+     * @param operationTokens
+     * @param tokens
+     * @throws EmptyStackException
+     * @throws IOException
+     */
     private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) throws EmptyStackException, IOException {
         int i = 0;
         Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {
             Pair<Tokens, String> current = tokens.get(i);
-            if(isLPARENTHESISToken(current)) numberTokens.push(current);
+            if(isTANToken(current) || isCOSToken(current) || isSINToken(current) || isCOTToken(current)) numberTokens.push(current);
+            else if(isLPARENTHESISToken(current)) numberTokens.push(current);
             else if(isRPARENTHESISToken(current)) {
                 Pair<Tokens, String> isprazni2 = numberTokens.pop();
                 Pair<Tokens, String> isprazni1 = numberTokens.pop();
@@ -58,6 +74,31 @@ public class DigitronParser {
                     isprazni2 = numberTokens.pop();
                     isprazni1 = numberTokens.pop();
                 }
+                if(isTANToken(numberTokens.peek())) {
+                    numberTokens.pop();
+                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    rez = Math.tan(angle);
+                    isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
+                }
+                else if(isSINToken(numberTokens.peek())) {
+                    numberTokens.pop();
+                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    rez = Math.sin(angle);
+                    isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
+                }
+                else if(isCOSToken(numberTokens.peek())) {
+                    numberTokens.pop();
+                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    rez = Math.cos(angle);
+                    isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
+                }
+                else if(isCOTToken(numberTokens.peek())) {
+                    numberTokens.pop();
+                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    rez = Math.cos(angle) / Math.sin(angle);
+                    isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
+                }
+                else ;
                 numberTokens.push(isprazni2);
             }
             else if(numberTokens.size() >= 2 && !operationTokens.empty() && hasHigherPrecedence(operationTokens.peek())) {
@@ -107,6 +148,15 @@ public class DigitronParser {
         }
     }
 
+    /**
+     * calculation is postponed if next token is inside parentheses
+     *
+     * @param numberTokens
+     * @param operationTokens
+     * @param current
+     * @param op2Token
+     * @param op1Token
+     */
     private static void postponeEvaluation(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, Pair<Tokens, String> current, Pair<Tokens, String> op2Token, Pair<Tokens, String> op1Token) {
         numberTokens.push(op1Token);
         numberTokens.push(op2Token);
@@ -125,6 +175,22 @@ public class DigitronParser {
 
     private static boolean isEOFToken(Pair<Tokens, String> token) {
         return token.getKey() == Tokens.EOF;
+    }
+
+    private static boolean isTANToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.TAN;
+    }
+
+    private static boolean isSINToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.SIN;
+    }
+
+    private static boolean isCOSToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.COS;
+    }
+
+    private static boolean isCOTToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.COT;
     }
 
     private static boolean isOperationToken(Pair<Tokens, String> token) {

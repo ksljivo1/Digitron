@@ -13,13 +13,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * JavaFX controller for log in form
+ *
+ * @author ksljivo1
+ */
 
 public class LogInController {
     public TextField textFld;

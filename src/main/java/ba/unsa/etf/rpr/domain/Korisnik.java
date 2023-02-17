@@ -2,6 +2,12 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
+/**
+ * bean for korisnik
+ *
+ * @author ksljivo1
+ */
+
 public class Korisnik implements Idable {
     private int id;
     private String username, password;

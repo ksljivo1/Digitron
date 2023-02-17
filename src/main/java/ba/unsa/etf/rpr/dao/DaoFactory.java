@@ -1,5 +1,11 @@
 package ba.unsa.etf.rpr.dao;
 
+/**
+ * Factory method for singleton implementation of DAOs
+ *
+ * @author ksljivo1
+ */
+
 public class DaoFactory {
     private static final KorisnikDao korisnikDao = KorisnikDaoSQLImpl.getInstance();
     private static final RacunDao racunDao = RacunDaoSQLImpl.getInstance();

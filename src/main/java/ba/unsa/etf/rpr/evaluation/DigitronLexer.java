@@ -6,6 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Lexical analysis of calculator input expressions
+ *
+ * @author ksljivo1
+ */
+
 public class DigitronLexer {
     List<Pair<Tokens, String>> tokens;
 
@@ -13,6 +19,11 @@ public class DigitronLexer {
         tokens = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param expr
+     * @throws IOException
+     */
     public void tokenize(String expr) throws IOException {
         int poz = 0;
         while(poz < expr.length()) {
@@ -22,7 +33,6 @@ public class DigitronLexer {
             else if(current == '*') tokens.add(new Pair<>(Tokens.MULTIPLY, "*"));
             else if(current == '/') tokens.add(new Pair<>(Tokens.DIVIDE, "/"));
             else if(current == '(') {
-                // podrska za unarni minus
                 if(isUnaryMinus()) {
                     modifyUnary("1");
                     tokens.add(new Pair<>(Tokens.MULTIPLY, "*"));
@@ -54,6 +64,26 @@ public class DigitronLexer {
                 poz = poz1 - 1;
             }
             else if(Character.isWhitespace(current)) ;
+            else if(poz + 2 < expr.length() && current == 't' &&
+                expr.charAt(poz + 1) == 'a' && expr.charAt(poz + 2) == 'n') {
+                tokens.add(new Pair<>(Tokens.TAN, "tan"));
+                poz = poz + 2;
+            }
+            else if(poz + 2 < expr.length() && current == 's' &&
+                    expr.charAt(poz + 1) == 'i' && expr.charAt(poz + 2) == 'n') {
+                tokens.add(new Pair<>(Tokens.SIN, "sin"));
+                poz = poz + 2;
+            }
+            else if(poz + 2 < expr.length() && current == 'c' &&
+                    expr.charAt(poz + 1) == 'o' && expr.charAt(poz + 2) == 's') {
+                tokens.add(new Pair<>(Tokens.COS, "cos"));
+                poz = poz + 2;
+            }
+            else if(poz + 2 < expr.length() && current == 'c' &&
+                    expr.charAt(poz + 1) == 'o' && expr.charAt(poz + 2) == 't') {
+                tokens.add(new Pair<>(Tokens.COT, "cot"));
+                poz = poz + 2;
+            }
             else throw new IOException(getExceptionMessage(poz, current));
             poz = poz + 1;
         }

@@ -4,6 +4,12 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Korisnik;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 
+/**
+ * Business Logic Layer for management of Korisnik instances
+ *
+ * @author ksljivo1
+ */
+
 public class KorisnikManager {
     public boolean comparePasswords(Korisnik korisnik, String password) {
         return korisnik != null && korisnik.getPassword().equals(password);

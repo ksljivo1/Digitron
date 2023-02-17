@@ -1,20 +1,19 @@
 package ba.unsa.etf.rpr.domain;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
+
+/**
+ * bean for racun
+ *
+ * @author ksljivo1
+ */
 
 public class Racun implements Idable {
     private int id;
     private Date datum;
     private String rezultat;
     private int idKorisnik;
-
-    /*public Racun(int id, Date datum, String rezultat) {
-        this.id = id;
-        this.datum = datum;
-        this.rezultat = rezultat;
-    }*/
 
     public Racun() {}
 

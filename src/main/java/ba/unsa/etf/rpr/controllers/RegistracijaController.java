@@ -11,6 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+/**
+ * JavaFX controller for registration management
+ *
+ * @author ksljivo1
+ */
+
 public class RegistracijaController {
     public static final String POLJE_JE_ISPRAVNO = "poljeJeIspravno";
     public static final String POLJE_NIJE_ISPRAVNO = "poljeNijeIspravno";

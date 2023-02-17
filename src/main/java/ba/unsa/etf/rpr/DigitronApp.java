@@ -7,6 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+/**
+ * Main class for working with JavaFX framework
+ */
+
 public class DigitronApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {

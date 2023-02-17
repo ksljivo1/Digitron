@@ -7,6 +7,12 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.util.Date;
 
+/**
+ * Helper Model class that supports 2 way data binding between labels and records in Racun
+ * @author ksljivo1
+ *
+ */
+
 public class RacunModel {
     private SimpleIntegerProperty id;
     private SimpleObjectProperty<Date> datum;

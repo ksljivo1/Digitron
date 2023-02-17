@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * MySQL implementation of the DAO
+ * @author ksljivo1
+ */
+
 public class KorisnikDaoSQLImpl extends AbstractDao<Korisnik> implements KorisnikDao {
     private static  KorisnikDaoSQLImpl instance = null;
 

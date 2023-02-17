@@ -6,6 +6,12 @@ import ba.unsa.etf.rpr.exceptions.DigitronException;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Abstract class that implements core DAO CRUD methods for every entity
+ *
+ * @author Dino Keco
+ */
+
 public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     private static Connection connection;
     private String tableName;

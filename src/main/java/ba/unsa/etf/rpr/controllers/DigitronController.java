@@ -19,13 +19,17 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -37,6 +41,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+/**
+ * JavaFX controller for alteration and deletion of calculations
+ *
+ * @author Dino Keco
+ */
 
 public class DigitronController {
     private final RacunDao racunDao = DaoFactory.racunDao();
@@ -58,6 +68,57 @@ public class DigitronController {
     private RacuniModel racuniModel = new RacuniModel();
     private OmiljenaOperacijaModel omiljenaOperacijaModel;
 
+    public void tanBtnClicked(ActionEvent actionEvent) {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=")) display.setText("tan");
+        else {
+            display.setText(tekst + " tan");
+        }
+    }
+
+    public void cotBtnClicked(ActionEvent actionEvent) {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=")) display.setText("cot");
+        else {
+            display.setText(tekst + " cot");
+        }
+    }
+
+    public void sinBtnClicked(ActionEvent actionEvent) {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=")) display.setText("sin");
+        else {
+            display.setText(tekst + " sin");
+        }
+    }
+
+    public void cosBtnClicked(ActionEvent actionEvent) {
+        String tekst = display.getText().strip();
+        if(tekst.equals("0") || tekst.contains("=")) display.setText("cos");
+        else {
+            display.setText(tekst + " cos");
+        }
+    }
+
+    public void graphBtnClicked(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/graphing.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Digitron");
+        stage.setMinWidth(600);
+        stage.setMinHeight(400);
+        stage.setTitle("Graphing");
+        stage.setResizable(false);
+
+        Scene scene = new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        stage.setScene(scene);
+
+        stage.show();
+    }
+
+    /**
+     * Helper cell factory class for ListView control
+     */
     public class XCell extends ListCell<RacunModel> {
         GridPane gridPane = new GridPane();
         Label rezultat = new Label("");
@@ -277,6 +338,10 @@ public class DigitronController {
         backspaceBtn.setGraphic(image);
     }
 
+    /**
+     * Event handler for digit buttons
+     * @param event
+     */
     public void handleDigitButtonClick(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         String buttonId = clickedButton.getId();
@@ -314,6 +379,10 @@ public class DigitronController {
         display.setText(tekst + " + ");
     }
 
+    /**
+     * Event handler for equals button
+     * @throws DigitronException
+     */
     public void equalsBtnClicked() throws DigitronException {
         String expr = display.getText();
         Animation animation = new Transition() {

@@ -1,9 +1,12 @@
 package ba.unsa.etf.rpr.domain;
 
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ObservableValueBase;
-
 import java.util.Objects;
+
+/**
+ * bean for omiljenaoperacija
+ *
+ * @author ksljivo1
+ */
 
 public class OmiljenaOperacija implements Idable {
     private int id;

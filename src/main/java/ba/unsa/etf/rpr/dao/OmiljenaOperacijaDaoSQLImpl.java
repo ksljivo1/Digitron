@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * MySQL implementation of the DAO
+ * @author ksljivo1
+ */
+
 public class OmiljenaOperacijaDaoSQLImpl extends AbstractDao<OmiljenaOperacija> implements OmiljenaOperacijaDao {
     private static OmiljenaOperacijaDaoSQLImpl instance = null;
 

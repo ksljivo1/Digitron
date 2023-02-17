@@ -4,6 +4,12 @@ import ba.unsa.etf.rpr.domain.OmiljenaOperacija;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * Helper Model class that supports 2 way data binding between labels and records in OmiljenaOperacija
+ * @author ksljivo1
+ *
+ */
+
 public class OmiljenaOperacijaModel {
     private SimpleIntegerProperty id;
     private SimpleStringProperty operacija;
