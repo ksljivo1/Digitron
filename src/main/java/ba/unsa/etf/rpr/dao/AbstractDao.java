@@ -36,16 +36,13 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             e.printStackTrace();
         }
         finally {
-            /*Runtime.getRuntime().addShutdownHook(new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        connection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            });*/
+            }));
         }
     }
 
