@@ -41,7 +41,8 @@ public class RacunDaoSQLImpl extends AbstractDao<Racun> implements RacunDao {
             racun.setDatum(rs.getDate("datum"));
             racun.setRezultat(rs.getString("rezultat"));
             return racun;
-        } catch (SQLException e) {
+        }
+        catch(SQLException e) {
             throw new DigitronException(e.getMessage(), e);
         }
     }
@@ -67,7 +68,12 @@ public class RacunDaoSQLImpl extends AbstractDao<Racun> implements RacunDao {
             while(rs.next()) racuni.add(row2object(rs));
         }
         catch(SQLException e) {
-            throw new DigitronException(e.getMessage(), e);
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                return getRacuniByKorisnikId(korisnikId);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
         return racuni;
     }

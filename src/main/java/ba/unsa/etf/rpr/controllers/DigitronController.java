@@ -108,7 +108,7 @@ public class DigitronController {
         stage.setMinWidth(600);
         stage.setMinHeight(400);
         stage.setTitle("Graphing");
-        stage.setResizable(false);
+        //stage.setResizable(false);
 
         Scene scene = new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         stage.setScene(scene);
@@ -265,7 +265,7 @@ public class DigitronController {
             try {
                 DaoFactory.korisnikDao().update(korisnik);
             } catch (DigitronException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         });
     }

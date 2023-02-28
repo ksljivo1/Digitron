@@ -55,7 +55,7 @@ public class DigitronParser {
      * @throws EmptyStackException
      * @throws IOException
      */
-    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) throws EmptyStackException, IOException {
+    private static void parse(Stack<Pair<Tokens, String>> numberTokens, Stack<Pair<Tokens, String>> operationTokens, List<Pair<Tokens, String>> tokens) throws EmptyStackException, IOException, NumberFormatException {
         int i = 0;
         Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {

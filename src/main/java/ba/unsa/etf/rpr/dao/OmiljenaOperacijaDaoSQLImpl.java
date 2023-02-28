@@ -65,8 +65,13 @@ public class OmiljenaOperacijaDaoSQLImpl extends AbstractDao<OmiljenaOperacija> 
             if(!rs.next()) return null;
             return row2object(rs);
         }
-        catch(SQLException | DigitronException e) {
-            throw new DigitronException(e.getMessage(), e);
+        catch(SQLException e) {
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                return getOmiljenaOperacijaByKorisnikId(korisnikId);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
     }
 }

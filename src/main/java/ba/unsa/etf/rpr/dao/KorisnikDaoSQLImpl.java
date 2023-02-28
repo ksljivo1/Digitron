@@ -66,7 +66,12 @@ public class KorisnikDaoSQLImpl extends AbstractDao<Korisnik> implements Korisni
             return row2object(rs);
         }
         catch(SQLException e) {
-            throw new DigitronException(e.getMessage(), e);
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                return getKorisnikByUsername(username);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
     }
 }

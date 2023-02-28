@@ -13,7 +13,7 @@ import java.util.*;
  */
 
 public abstract class AbstractDao<T extends Idable> implements Dao<T> {
-    private static Connection connection;
+    protected static Connection connection;
     private String tableName;
 
     public AbstractDao(String tableName) {
@@ -21,7 +21,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         createConnection();
     }
 
-    private static void createConnection() {
+    protected static void createConnection() {
         if(connection != null) return;
         try {
             Properties p = new Properties();
@@ -70,11 +70,18 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             }
             else {
                 throw new DigitronException("Object not found");
+
             }
         }
         catch(SQLException e) {
-            throw new DigitronException(e.getMessage(), e);
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                getById(id);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
+        return null;
     }
 
     public List<T> getAll() throws DigitronException {
@@ -91,7 +98,12 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             return results;
         }
         catch(SQLException e) {
-            throw new DigitronException(e.getMessage(), e);
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                return getAll();
+            }
+           else throw new DigitronException(e.getMessage(), e);
         }
     }
 
@@ -103,7 +115,12 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             stmt.executeUpdate();
         }
         catch(SQLException e) {
-            throw new DigitronException(e.getMessage(), e);
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                delete(id);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
     }
 
@@ -144,8 +161,14 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             rs.next();
             item.setId(rs.getInt(1));
             return item;
-        } catch(SQLException e){
-            throw new DigitronException(e.getMessage(), e);
+        }
+        catch(SQLException e) {
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                return add(item);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
     }
 
@@ -186,7 +209,12 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             return item;
         }
         catch(SQLException e) {
-            throw new DigitronException(e.getMessage(), e);
+            if(e.getMessage().contains("inactivity")) {
+                connection = null;
+                createConnection();
+                return update(item);
+            }
+            else throw new DigitronException(e.getMessage(), e);
         }
     }
 }
