@@ -18,5 +18,6 @@ public enum Tokens {
     TAN,
     SIN,
     COS,
-    COT
+    COT,
+    LOG
 }

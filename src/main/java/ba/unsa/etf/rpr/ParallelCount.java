@@ -14,7 +14,7 @@ public class ParallelCount extends Thread {
     private Optional<String> combined;
     private long broj;
 
-    public ParallelCount(char search,Optional<String> combined) {
+    public ParallelCount(char search, Optional<String> combined) {
         this.search = search;
         this.combined = combined;
     }

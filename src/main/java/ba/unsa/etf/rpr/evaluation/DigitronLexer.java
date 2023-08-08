@@ -29,6 +29,10 @@ public class DigitronLexer {
         while(poz < expr.length()) {
             char current = expr.charAt(poz);
             if(current == '+') tokens.add(new Pair<>(Tokens.PLUS, "+"));
+            else if(current == 't' && poz + 2 < expr.length() && expr.charAt(poz + 1) == 'a' && expr.charAt(poz + 2) == 'n') {
+                tokens.add(new Pair<>(Tokens.TAN, "tan"));
+                poz = poz + 2;
+            }
             else if(current == '-') tokens.add(new Pair<>(Tokens.MINUS, "-"));
             else if(current == '*') tokens.add(new Pair<>(Tokens.MULTIPLY, "*"));
             else if(current == '/') tokens.add(new Pair<>(Tokens.DIVIDE, "/"));
@@ -63,15 +67,15 @@ public class DigitronLexer {
                 else tokens.add(new Pair<>(Tokens.DOUBLE, str));
                 poz = poz1 - 1;
             }
-            else if(Character.isWhitespace(current)) ;
-            else if(poz + 2 < expr.length() && current == 't' &&
-                expr.charAt(poz + 1) == 'a' && expr.charAt(poz + 2) == 'n') {
-                tokens.add(new Pair<>(Tokens.TAN, "tan"));
-                poz = poz + 2;
-            }
+            else if(Character.isWhitespace(current));
             else if(poz + 2 < expr.length() && current == 's' &&
                     expr.charAt(poz + 1) == 'i' && expr.charAt(poz + 2) == 'n') {
                 tokens.add(new Pair<>(Tokens.SIN, "sin"));
+                poz = poz + 2;
+            }
+            else if(poz + 2 < expr.length() && current == 'l' &&
+                    expr.charAt(poz + 1) == 'o' && expr.charAt(poz + 2) == 'g') {
+                tokens.add(new Pair<>(Tokens.LOG, "log"));
                 poz = poz + 2;
             }
             else if(poz + 2 < expr.length() && current == 'c' &&

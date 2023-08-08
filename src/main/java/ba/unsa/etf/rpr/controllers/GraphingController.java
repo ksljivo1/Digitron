@@ -1,121 +1,149 @@
 package ba.unsa.etf.rpr.controllers;
 
+import ba.unsa.etf.rpr.evaluation.DigitronParser;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
+import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
+
+import java.io.IOException;
 
 public class GraphingController {
     public BorderPane borderPane;
+    public TextField input;
+    private double scaleFactor = 1;
 
     @FXML
     public void initialize() {
-        NumberAxis xAxis = new NumberAxis("X", 0, 2*Math.PI, Math.PI/4);
-        NumberAxis yAxis = new NumberAxis("Y", -1, 1, 0.2);
+        borderPane.setOnScroll(event -> {
+            scaleFactor = scaleFactor * (event.getDeltaY() > 0 ? 0.9 : 1.1);
+            String text = input.getText();
 
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Draw a graph of trig functions");
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(10));
+            pauseTransition.setOnFinished(e -> renderGraphAsync(text));
+            pauseTransition.play();
+        });
 
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("");
-        lineChart.getData().add(series);
-        borderPane.centerProperty().setValue(lineChart);
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(10));
+            pauseTransition.setOnFinished(e -> renderGraphAsync(input.getText()));
+            pauseTransition.play();
+        });
+
     }
 
-    public void drawSin() {
-        NumberAxis xAxis = new NumberAxis("X", 0, 2*Math.PI, Math.PI/4);
-        NumberAxis yAxis = new NumberAxis("Y", -1, 1, 0.2);
+    /*@FXML
+    public void initialize() {
+       /* borderPane.setOnScroll(event -> {
+            scaleFactor = scaleFactor * (event.getDeltaY() > 0 ? 0.9 : 1.1);
+            String text = input.getText();
+            input.setText("0");
+            input.setText(text);
+        });
+
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                NumberAxis xAxis = new NumberAxis("X", -10 * scaleFactor, 10 * scaleFactor, 0.1);
+                NumberAxis yAxis = new NumberAxis("Y", -10 * scaleFactor, 10 * scaleFactor, 0.1);
+
+                LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+                lineChart.setTitle("Function Graph");
+                XYChart.Series<Number, Number> series = new XYChart.Series<>();
+                lineChart.setCreateSymbols(false);
+                series.setName("y = f(x)");
+
+                for(double x = -10 * scaleFactor; x <= 10 * scaleFactor; x += 0.01) {
+                    String roundedNumber = String.format("%.5f", x);
+                    var value = Double.parseDouble(roundedNumber);
+                    String inputA = newValue == null ? "" : newValue;
+                    inputA = inputA.replaceAll("x", "(" + value + ")");
+                    DigitronParser digitronParser = new DigitronParser(inputA);
+                    double y = 0;
+                    try {
+                        y = Double.parseDouble(digitronParser.evaluate().peek().getValue());
+                    }
+                    catch (IOException ioException){
+                        if(ioException.getMessage().contains("Division")) continue;
+                    }
+                    series.getData().add(new XYChart.Data<>(x, y));
+                }
+                lineChart.getData().add(series);
+                borderPane.centerProperty().setValue(lineChart);
+            } catch (Exception ignored) {
+                ignored.printStackTrace();
+            }
+
+        });
+    }*/
 
 
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Sine Function Graph");
+    private void renderGraphAsync(String newValue) {
+        Task<Void> renderTask = new Task<>() {
+            @Override
+            protected Void call() {
+                try {
+                    // Your graph rendering code here
 
+                    // NumberAxis xAxis = new NumberAxis("X", 0, 2*Math.PI, Math.PI/4);
+                    NumberAxis xAxis = new NumberAxis("X", -10 * scaleFactor, 10 * scaleFactor, 0.1);
+                    NumberAxis yAxis = new NumberAxis("Y", -10 * scaleFactor, 10 * scaleFactor, 0.1);
 
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("y = sin(x)");
-        for(double x = 0; x <= 2*Math.PI; x += 0.1) {
-            double y = Math.sin(x);
-            series.getData().add(new XYChart.Data<>(x, y));
-        }
+                    LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+                    lineChart.setTitle("Function Graph");
+                    XYChart.Series<Number, Number> series = new XYChart.Series<>();
+                    lineChart.setCreateSymbols(false);
+                    series.setName("y = f(x)");
 
-        lineChart.getData().add(series);
-        borderPane.centerProperty().setValue(lineChart);
-    }
+                    SplineInterpolator splineInterpolator = new SplineInterpolator();
 
-    public void drawCos(ActionEvent actionEvent) {
-        NumberAxis xAxis = new NumberAxis("X", 0, 2*Math.PI, Math.PI/4);
-        NumberAxis yAxis = new NumberAxis("Y", -1, 1, 0.2);
+                    var low = -10 * scaleFactor;
+                    var high = 10 * scaleFactor;
+                    var increment = 0.1 * scaleFactor;
+                    for (double x = low; x < high; x += increment) {
+                        String roundedNumber = String.format("%.5f", x);
+                        var value = Double.parseDouble(roundedNumber);
+                        String inputA = newValue == null ? "" : newValue;
+                        inputA = inputA.replaceAll("x", "(" + value + ")");
+                        DigitronParser digitronParser = new DigitronParser(inputA);
+                        double y = 0;
+                        try {
+                            y = Double.parseDouble(digitronParser.evaluate().peek().getValue());
+                        }
+                        catch (IOException ioException){
+                            if(ioException.getMessage().contains("Division")) continue;
+                        }
 
+                        series.getData().add(new XYChart.Data<>(x, y));
+                    }
 
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Cosine Function Graph");
+                    // Update the UI with the new graph
+                    Platform.runLater(() -> {
+                        lineChart.getData().clear();
+                        lineChart.getData().add(series);
+                        borderPane.setCenter(lineChart);
+                    });
 
+                } catch (Exception ignored) {
+                    ignored.printStackTrace();
+                }
 
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("y = cos(x)");
-        for(double x = 0; x <= 2*Math.PI; x += 0.1) {
-            double y = Math.cos(x);
-            series.getData().add(new XYChart.Data<>(x, y));
-        }
-        /*NumberAxis xAxis = new NumberAxis("X", 0, 10, 1);
-        NumberAxis yAxis = new NumberAxis("Y", 0, 25, 5);
+                return null;
+            }
+        };
 
-
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-
-
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("y = 2x + 1");
-        for (int x = 0; x <= 10; x++) {
-            int y = 2 * x + 1;
-            series.getData().add(new XYChart.Data<>(x, y));
-        }*/
-
-        lineChart.getData().add(series);
-        borderPane.centerProperty().setValue(lineChart);
-    }
-
-    public void drawTan() {
-        NumberAxis xAxis = new NumberAxis("X", -6*Math.PI, 6*Math.PI, Math.PI/4);
-        NumberAxis yAxis = new NumberAxis("Y", -50, 50, 0.2);
-
-
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Tangent Function Graph");
-
-
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("y = tan(x)");
-        for(double x = -6*Math.PI; x <= 6*Math.PI; x += 0.5) {
-            Double y = Math.tan(x);
-            if(y.isInfinite() || y.isNaN()) continue;
-            series.getData().add(new XYChart.Data<>(x, y));
-        }
-
-        lineChart.getData().add(series);
-        borderPane.centerProperty().setValue(lineChart);
-    }
-
-    public void drawCot() {
-        NumberAxis xAxis = new NumberAxis("X", -6*Math.PI, 6*Math.PI, Math.PI/4);
-        NumberAxis yAxis = new NumberAxis("Y", -50, 50, 0.2);
-
-
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Contangent Function Graph");
-
-
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("y = cot(x)");
-        for(double x = -6*Math.PI; x <= 6*Math.PI; x += 0.1) {
-            Double y = 1 / Math.tan(x);
-            if(y.isInfinite() || y.isNaN()) continue;
-            series.getData().add(new XYChart.Data<>(x, y));
-        }
-
-        lineChart.getData().add(series);
-        borderPane.centerProperty().setValue(lineChart);
+        Thread renderThread = new Thread(renderTask);
+        renderThread.setDaemon(true);
+        renderThread.start();
     }
 }

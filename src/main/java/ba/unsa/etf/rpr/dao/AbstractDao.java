@@ -3,8 +3,17 @@ package ba.unsa.etf.rpr.dao;
 import ba.unsa.etf.rpr.domain.Idable;
 import ba.unsa.etf.rpr.exceptions.DigitronException;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Abstract class that implements core DAO CRUD methods for every entity
@@ -13,7 +22,7 @@ import java.util.*;
  */
 
 public abstract class AbstractDao<T extends Idable> implements Dao<T> {
-    protected static Connection connection;
+    private static Connection connection;
     private String tableName;
 
     public AbstractDao(String tableName) {
@@ -21,7 +30,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         createConnection();
     }
 
-    protected static void createConnection() {
+    private static void createConnection() {
         if(connection != null) return;
         try {
             Properties p = new Properties();
@@ -35,7 +44,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             System.out.println("Nemoguce uspostaviti konekciju na bazu");
             e.printStackTrace();
         }
-        finally {
+        /*finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
                     connection.close();
@@ -43,7 +52,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
                     e.printStackTrace();
                 }
             }));
-        }
+        }*/
     }
 
     public static Connection getConnection(){

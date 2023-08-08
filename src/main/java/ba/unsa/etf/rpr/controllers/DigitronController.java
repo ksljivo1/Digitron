@@ -24,9 +24,21 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -58,6 +70,7 @@ public class DigitronController {
     public Button backspaceBtn;
     public GridPane background;
     public RadioButton radioBtn;
+
     public GridPane gridPane;
     public HBox hBox1;
     public HBox hbox2;
@@ -87,9 +100,7 @@ public class DigitronController {
     public void sinBtnClicked(ActionEvent actionEvent) {
         String tekst = display.getText().strip();
         if(tekst.equals("0") || tekst.contains("=")) display.setText("sin");
-        else {
-            display.setText(tekst + " sin");
-        }
+        else display.setText(tekst + " sin");
     }
 
     public void cosBtnClicked(ActionEvent actionEvent) {

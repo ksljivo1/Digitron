@@ -67,13 +67,8 @@ public class RacunDaoSQLImpl extends AbstractDao<Racun> implements RacunDao {
             ResultSet rs = statement.executeQuery();
             while(rs.next()) racuni.add(row2object(rs));
         }
-        catch(SQLException e) {
-            if(e.getMessage().contains("inactivity")) {
-                connection = null;
-                createConnection();
-                return getRacuniByKorisnikId(korisnikId);
-            }
-            else throw new DigitronException(e.getMessage(), e);
+        catch(Exception e) {
+            throw new DigitronException(e.getMessage(), e);
         }
         return racuni;
     }

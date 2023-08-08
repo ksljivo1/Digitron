@@ -60,7 +60,7 @@ public class DigitronParser {
         Double rez = 0.;
         while(!isEOFToken(tokens.get(i))) {
             Pair<Tokens, String> current = tokens.get(i);
-            if(isTANToken(current) || isCOSToken(current) || isSINToken(current) || isCOTToken(current)) numberTokens.push(current);
+            if(isTANToken(current) || isCOSToken(current) || isSINToken(current) || isCOTToken(current) || isLOGToken(current)) numberTokens.push(current);
             else if(isLPARENTHESISToken(current)) numberTokens.push(current);
             else if(isRPARENTHESISToken(current)) {
                 Pair<Tokens, String> isprazni2 = numberTokens.pop();
@@ -74,28 +74,34 @@ public class DigitronParser {
                     isprazni2 = numberTokens.pop();
                     isprazni1 = numberTokens.pop();
                 }
-                if(isTANToken(numberTokens.peek())) {
+                if(!numberTokens.empty() && isTANToken(numberTokens.peek())) {
                     numberTokens.pop();
-                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    double angle = Double.parseDouble(isprazni2.getValue());
                     rez = Math.tan(angle);
                     isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
                 }
-                else if(isSINToken(numberTokens.peek())) {
+                else if(!numberTokens.empty() && isSINToken(numberTokens.peek())) {
                     numberTokens.pop();
-                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    double angle = Double.parseDouble(isprazni2.getValue());//Math.toRadians(Double.parseDouble(isprazni2.getValue()));
                     rez = Math.sin(angle);
                     isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
                 }
-                else if(isCOSToken(numberTokens.peek())) {
+                else if (!numberTokens.empty() && isCOSToken(numberTokens.peek())) {
                     numberTokens.pop();
-                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    double angle = Double.parseDouble(isprazni2.getValue());
                     rez = Math.cos(angle);
                     isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
                 }
-                else if(isCOTToken(numberTokens.peek())) {
+                else if(!numberTokens.empty() && isCOTToken(numberTokens.peek())) {
                     numberTokens.pop();
-                    double angle = Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    double angle = Double.parseDouble(isprazni2.getValue());
                     rez = Math.cos(angle) / Math.sin(angle);
+                    isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
+                }
+                else if(!numberTokens.empty() && isLOGToken(numberTokens.peek())) {
+                    numberTokens.pop();
+                    double angle = Double.parseDouble(isprazni2.getValue());//Math.toRadians(Double.parseDouble(isprazni2.getValue()));
+                    rez = Math.log10(angle);
                     isprazni2 = new Pair<>(Tokens.DOUBLE, String.valueOf(rez));
                 }
                 else ;
@@ -191,6 +197,10 @@ public class DigitronParser {
 
     private static boolean isCOTToken(Pair<Tokens, String> token) {
         return token.getKey() == Tokens.COT;
+    }
+
+    private static boolean isLOGToken(Pair<Tokens, String> token) {
+        return token.getKey() == Tokens.LOG;
     }
 
     private static boolean isOperationToken(Pair<Tokens, String> token) {
