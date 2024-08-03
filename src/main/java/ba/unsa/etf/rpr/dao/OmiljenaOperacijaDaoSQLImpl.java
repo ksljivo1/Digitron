@@ -35,9 +35,9 @@ public class OmiljenaOperacijaDaoSQLImpl extends AbstractDao<OmiljenaOperacija> 
         try {
             OmiljenaOperacija omiljenaOperacija = new OmiljenaOperacija();
             omiljenaOperacija.setId(rs.getInt(1));
-            omiljenaOperacija.setOperacija(rs.getString(2));
-            omiljenaOperacija.setBrojPonavljanja(rs.getInt(3));
-            omiljenaOperacija.setIdKorisnik(rs.getInt(4));
+            omiljenaOperacija.setBrojPonavljanja(rs.getInt(2));
+            omiljenaOperacija.setIdKorisnik(rs.getInt(3));
+            omiljenaOperacija.setOperacija(rs.getString(4));
             return omiljenaOperacija;
         }
         catch(SQLException e) {

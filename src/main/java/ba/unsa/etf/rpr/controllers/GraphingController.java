@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
-import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
+//import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 
 import java.io.IOException;
 
@@ -105,7 +105,7 @@ public class GraphingController {
                     lineChart.setCreateSymbols(false);
                     series.setName("y = f(x)");
 
-                    SplineInterpolator splineInterpolator = new SplineInterpolator();
+                    //SplineInterpolator splineInterpolator = new SplineInterpolator();
 
                     var low = -10 * scaleFactor;
                     var high = 10 * scaleFactor;

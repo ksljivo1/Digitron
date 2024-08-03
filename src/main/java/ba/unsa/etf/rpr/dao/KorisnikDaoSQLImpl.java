@@ -35,9 +35,9 @@ public class KorisnikDaoSQLImpl extends AbstractDao<Korisnik> implements Korisni
         try {
             Korisnik korisnik = new Korisnik();
             korisnik.setId(rs.getInt(1));
-            korisnik.setUsername(rs.getString(2));
-            korisnik.setPassword(rs.getString(3));
-            korisnik.setMode(rs.getInt(4) == 1);
+            korisnik.setMode(rs.getInt(2) == 1);
+            korisnik.setUsername(rs.getString(3));
+            korisnik.setPassword(rs.getString(4));
             return korisnik;
         }
         catch(SQLException e) {
@@ -51,7 +51,7 @@ public class KorisnikDaoSQLImpl extends AbstractDao<Korisnik> implements Korisni
         row.put("id", object.getId());
         row.put("username", object.getUsername());
         row.put("password", object.getPassword());
-        row.put("mode", object.isMode() ? 1 : 0);
+        row.put("mode", object.isMode());
         return row;
     }
 

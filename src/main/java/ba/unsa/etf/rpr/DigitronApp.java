@@ -8,7 +8,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
- * Main class for working with JavaFX framework
+ * ba.unsa.etf.rpr.Launch class for working with JavaFX framework
  */
 
 public class DigitronApp extends Application {
