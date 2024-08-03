@@ -1,7 +1,7 @@
 # DigitronApp
 ## Overview
 The Calculator App is a JavaFX application that allows users to perform basic arithmetic operations on integers and decimal numbers. It also supports the priority of operations and the use of parentheses.
-Users can also register with a username and password to save their calculations and view their history. Use of keyboard for input is also supported.
+Users can also register with a username and password to save their calculations and view their history. Use of keyboard for input is also supported. A new feature allows users to draw graphs
 
 ## Requirements
 - Java 17 or later
