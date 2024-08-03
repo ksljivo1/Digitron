@@ -6,9 +6,9 @@ Users can also register with a username and password to save their calculations 
 ## Usage
 The calculator allows you to perform basic arithmetic operations, use trigonometric functions, and handle complex expressions with parentheses. 
 
-![digitron](https://github.com/user-attachments/assets/99ea94f5-9374-4dab-b463-885aae5fdb7c)
+![digitron](https://github.com/user-attachments/assets/fd349d3a-0957-44d2-bcc6-02b17e108cba)
 
-### Graphing
+## Graphing
 You can plot mathematical functions by entering the function expression in the graphing interface.
 
 ![graph](https://github.com/user-attachments/assets/c7f01c31-89cd-44ad-bfcf-21abae3d30a2)
