@@ -48,7 +48,7 @@ public class RegistracijaController {
     public void onBtnClicked(ActionEvent actionEvent) throws DigitronException {
         try {
             Korisnik korisnik = new Korisnik();
-            korisnik.setMode(true);
+            korisnik.setMode(1);
             korisnik.setUsername(textFld.getText().strip());
             korisnik.setPassword(passwordFld.getText().strip());
             korisnik = korisnikManager.add(korisnik);

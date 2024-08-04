@@ -264,7 +264,7 @@ public class DigitronController {
         omiljenaOperacijaModel = new OmiljenaOperacijaModel(DaoFactory.omiljenaOperacijaDao().getOmiljenaOperacijaByKorisnikId(korisnik.getId()));
         omiljenaOperacijaLabel.textProperty().bind(omiljenaOperacijaModel.operacijaProperty());
         brojPonavljanjaLabel.textProperty().bind(omiljenaOperacijaModel.brojPonavljanjaProperty().asString());
-        if(korisnik.isMode()) lightMode();
+        if(korisnik.getMode() == 0) lightMode();
         else {
             darkMode();
             radioBtn.fire();
@@ -272,7 +272,7 @@ public class DigitronController {
         radioBtn.selectedProperty().addListener((observableValue, wasSelected, isSelected) -> {
             if(isSelected) darkMode();
             else lightMode();
-            korisnik.setMode(!isSelected);
+            korisnik.setMode(isSelected ? 0 : 1);
             try {
                 DaoFactory.korisnikDao().update(korisnik);
             } catch (DigitronException e) {

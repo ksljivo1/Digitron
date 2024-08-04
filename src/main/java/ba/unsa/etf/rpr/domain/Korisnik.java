@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Korisnik implements Idable {
     private int id;
     private String username, password;
-    private boolean mode;
+    private int mode;
 
     public Korisnik() {
     }
@@ -40,11 +40,11 @@ public class Korisnik implements Idable {
         this.password = password;
     }
 
-    public boolean isMode() {
+    public int getMode() {
         return mode;
     }
 
-    public void setMode(boolean mode) {
+    public void setMode(int mode) {
         this.mode = mode;
     }
 

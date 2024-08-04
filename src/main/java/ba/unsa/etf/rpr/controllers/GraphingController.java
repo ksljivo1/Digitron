@@ -4,18 +4,13 @@ import ba.unsa.etf.rpr.evaluation.DigitronParser;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
-//import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 
 import java.io.IOException;
 
